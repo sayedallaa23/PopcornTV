@@ -2,12 +2,8 @@
 import Image from "next/image";
 import { FaPlay } from "react-icons/fa";
 import Pricing from "@/components/Pricing";
-import PriceCard from "@/components/PriceCard";
-import Carousel from "@/components/Carousel";
-import { DiVim } from "react-icons/di";
 import { useEffect, useState } from "react";
 import CartSlider from "@/components/CartSlider";
-import { ApiCalls } from "@/components/ApiCalls";
 import { log } from "console";
 import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa6";
@@ -109,7 +105,7 @@ export default function Home() {
       method: "GET",
       headers: {
         accept: "application/json",
-        Authorization: process.env.TOKEN,
+        Authorization: process.env.NEXT_PUBLIC_TOKEN,
       },
     };
     const response = await fetch(
@@ -172,7 +168,10 @@ export default function Home() {
       <div className="home-slick mx-auto mb-[10%] w-[80vw]">
         <CartSlider>
           {movies.map((movie, index) => (
-            <div className="rounded-[10px] bg-[#1A1A1A] pl-[20px] pr-[25px] pt-[20px] text-white" key={index}>
+            <div
+              className="rounded-[10px] bg-[#1A1A1A] pl-[20px] pr-[25px] pt-[20px] text-white"
+              key={index}
+            >
               <Link href={`/${movie.genre.toLowerCase()}`}>
                 <div className="flex flex-col gap-2">
                   <div className="flex gap-2">
