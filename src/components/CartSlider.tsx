@@ -13,12 +13,19 @@ function CartSlider({ children }: Props) {
   const [oldSlide, setOldSlide] = useState(0);
   const [activeSlide, setActiveSlide] = useState(0);
   const [activeSlide2, setActiveSlide2] = useState(0);
-  let sliderRef = useRef(null);
+  let sliderRef = useRef<Slider>(null);
+  const [slider, setSlider] = useState<Slider | null>(null);
+
   const next = () => {
-    sliderRef.slickNext();
+    if (slider) {
+      slider.slickNext();
+    }
   };
+
   const previous = () => {
-    sliderRef.slickPrev();
+    if (slider) {
+      slider.slickPrev();
+    }
   };
   const [isMobile, setIsMobile] = useState(
     typeof window !== "undefined" && window.innerWidth < 700,
@@ -49,7 +56,8 @@ function CartSlider({ children }: Props) {
             Explore our wide variety of categories
           </h2>
           <p className="text-[14px] text-[#999999] lg:w-[90%]">
-          Whether you&apos;re looking for a comedy to make you laugh, a drama to make you think, or a documentary to learn something new
+            Whether you&apos;re looking for a comedy to make you laugh, a drama
+            to make you think, or a documentary to learn something new
           </p>
         </div>
         <div className="hidden h-[55px] w-[19%] items-center justify-evenly rounded-[12px] bg-[#0F0F0F] text-white lg:flex">
@@ -62,26 +70,26 @@ function CartSlider({ children }: Props) {
           <div className="doooots">
             <button
               onClick={() => {
-                sliderRef.slickGoTo(0);
+                (sliderRef.current as any)?.slickGoTo(0);
               }}
               className={activeSlide == 0 ? "active" : ""}
             ></button>
             <button
               className={activeSlide == 5 ? "active" : ""}
               onClick={() => {
-                sliderRef.slickGoTo(5);
+                (sliderRef.current as any)?.slickGoTo(5);
               }}
             ></button>
             <button
               className={activeSlide == 10 ? "active" : ""}
               onClick={() => {
-                sliderRef.slickGoTo(10);
+                (sliderRef.current as any)?.slickGoTo(10);
               }}
             ></button>
             <button
               className={activeSlide == 15 ? "active" : ""}
               onClick={() => {
-                sliderRef.slickGoTo(15);
+                (sliderRef.current as any)?.slickGoTo(15);
               }}
             ></button>
           </div>
@@ -94,10 +102,10 @@ function CartSlider({ children }: Props) {
         </div>
       </div>
       <Slider
-        ref={(slider) => {
-          sliderRef = slider;
-        }}
         {...settings}
+        ref={(slider) => {
+          setSlider(slider);
+        }}
       >
         {children}
       </Slider>

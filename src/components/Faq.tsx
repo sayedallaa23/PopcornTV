@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Accordion, { AccordianItem } from "./Accordion";
 
 type Props = {};
 
 function Faq({}: Props) {
+    const [selectedAccordion, setSelectedAccordion] = useState<string | null>(null);
+
   return (
     <div className="mx-auto w-[88%] md:w-[82%] mb-[5rem]">
       <div className="flex flex-col lg:flex-row mb-[3rem]">
@@ -22,7 +24,7 @@ function Faq({}: Props) {
       </div>
       <div className="flex justify-between flex-col lg:flex-row">
         <div className="lg:w-[45%] w-[100%]">
-          <Accordion>
+          <Accordion value={selectedAccordion} onChange={setSelectedAccordion}>
             <AccordianItem value="1" trigger="What is StreamVibe?">
               <p className="text-[14px] text-[#999999] md:text-[16px]">StreamVibe is a streaming service that allows you to watch movies and shows on demand.</p>
             </AccordianItem>
@@ -35,7 +37,7 @@ function Faq({}: Props) {
           </Accordion>
         </div>
         <div className="lg:w-[45%] w-[100%]">
-          <Accordion>
+          <Accordion value={selectedAccordion} onChange={setSelectedAccordion}>
             <AccordianItem value="1" trigger="How do I sign up for StreamVibe?">
               <p className="text-[14px] text-[#999999] md:text-[16px]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, error.</p>
             </AccordianItem>

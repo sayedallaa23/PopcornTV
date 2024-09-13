@@ -100,12 +100,18 @@ export default function Home() {
     },
   ];
   const [movies, setmovies] = useState<any[]>([]);
+  const token = process.env.NEXT_PUBLIC_TOKEN;
+
+  if (!token) {
+    throw new Error("Authorization token is missing");
+  }
+
   const getData = async (catnum: number) => {
     const options = {
       method: "GET",
       headers: {
         accept: "application/json",
-        Authorization: process.env.NEXT_PUBLIC_TOKEN,
+        Authorization: `Bearer ${token}`,
       },
     };
     const response = await fetch(
@@ -172,48 +178,50 @@ export default function Home() {
               className="rounded-[10px] bg-[#1A1A1A] pl-[20px] pr-[25px] pt-[20px] text-white"
               key={index}
             >
-              <Link href={`/${movie.genre.toLowerCase()}`}>
-                <div className="flex flex-col gap-2">
-                  <div className="flex gap-2">
-                    <Image
-                      className="w-[50%] rounded-[10px] object-cover"
-                      src={`https://image.tmdb.org/t/p/original${movie.movies[0].poster_path}`}
-                      width={100}
-                      height={100}
-                      alt={""}
-                    ></Image>
-                    <Image
-                      className="w-[50%] rounded-[10px] object-cover"
-                      src={`https://image.tmdb.org/t/p/original${movie.movies[1].poster_path}`}
-                      width={100}
-                      height={100}
-                      alt={""}
-                    ></Image>
+              {movie.movies && movie.movies.length > 0 && (
+                <Link href={`/${movie.genre.toLowerCase()}`}>
+                  <div className="flex flex-col gap-2">
+                    <div className="flex gap-2">
+                      <Image
+                        className="w-[50%] rounded-[10px] object-cover"
+                        src={`https://image.tmdb.org/t/p/original${movie.movies[0].poster_path}`}
+                        width={100}
+                        height={100}
+                        alt={""}
+                      ></Image>
+                      <Image
+                        className="w-[50%] rounded-[10px] object-cover"
+                        src={`https://image.tmdb.org/t/p/original${movie.movies[1].poster_path}`}
+                        width={100}
+                        height={100}
+                        alt={""}
+                      ></Image>
+                    </div>
+                    <div className="a700 flex gap-2">
+                      <Image
+                        className="w-[50%] rounded-[10px] object-cover"
+                        src={`https://image.tmdb.org/t/p/original${movie.movies[2].poster_path}`}
+                        width={100}
+                        height={100}
+                        alt={""}
+                      ></Image>
+                      <Image
+                        className="w-[50%] rounded-[10px] object-cover"
+                        src={`https://image.tmdb.org/t/p/original${movie.movies[3].poster_path}`}
+                        width={100}
+                        height={100}
+                        alt={""}
+                      ></Image>
+                    </div>
                   </div>
-                  <div className="a700 flex gap-2">
-                    <Image
-                      className="w-[50%] rounded-[10px] object-cover"
-                      src={`https://image.tmdb.org/t/p/original${movie.movies[2].poster_path}`}
-                      width={100}
-                      height={100}
-                      alt={""}
-                    ></Image>
-                    <Image
-                      className="w-[50%] rounded-[10px] object-cover"
-                      src={`https://image.tmdb.org/t/p/original${movie.movies[3].poster_path}`}
-                      width={100}
-                      height={100}
-                      alt={""}
-                    ></Image>
+                  <div className="my-[10px] flex items-center justify-between text-[14px] md:text-[16px] lg:text-[18px]">
+                    <h4 className="">{movie.genre}</h4>
+                    <Link href={""}>
+                      <FaArrowRight className="" />
+                    </Link>
                   </div>
-                </div>
-                <div className="my-[10px] flex items-center justify-between text-[14px] md:text-[16px] lg:text-[18px]">
-                  <h4 className="">{movie.genre}</h4>
-                  <Link href={""}>
-                    <FaArrowRight className="" />
-                  </Link>
-                </div>
-              </Link>
+                </Link>
+              )}
             </div>
           ))}
         </CartSlider>
