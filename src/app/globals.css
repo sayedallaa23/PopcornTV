@@ -1,0 +1,169 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* use mob and md and lg breakpoints for this design */
+* {
+  padding: 0px;
+  margin: 0px;
+}
+body {
+  background-color: #141414;
+}
+
+.gradient-background {
+  display: block;
+  position: relative;
+}
+
+.gradient-background:before {
+  display: block;
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-box-shadow:
+    inset 0 200px 80px 0px rgba(0,0,0,0.1), /* bottom shadow */
+    inset 0 -200px 80px 0px rgba(0,0,0,0.1), /* top shadow */
+    inset 200px 0 80px 0px rgba(0,0,0,0.1), /* right shadow */
+    inset -200px 0 80px 0px rgba(0,0,0,0.1); /* left shadow */
+  box-shadow:
+    inset 0 200px 80px 0px rgba(0,0,0,0.1),
+    inset 0 -200px 80px 0px rgba(0,0,0,0.1),
+    inset 200px 0 80px 0px rgba(0,0,0,0.1),
+    inset -200px 0 80px 0px rgba(0,0,0,0.1);
+}
+
+.scrollable-element {
+  scrollbar-width: none;
+}
+.scrollable-element::-webkit-scrollbar {
+  display: none;
+}
+
+.slick-list {
+  margin: 0 -7px !important;
+}
+
+.slick-slide > div {
+  padding: 0 7px !important;
+  
+}
+
+.slick-dots li button:before {
+  background-color: red;
+  border-radius: 8px;
+  height: 4px !important;
+  /* margin-right: 100px !important; */
+  margin-top: 30px;
+  overflow: hidden;
+  text-indent: -9999px;
+  width: 15px !important;
+}
+
+.doooots {
+  display: flex;
+  justify-content: center;
+  margin: 1px;
+}
+
+.doooots button {
+  background-color: red;
+  opacity: 0.5;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  height: 3px;
+  margin: 0 3px;
+  padding: 0;
+  width: 15px;
+}
+
+.doooots button:hover {
+  background-color: red;
+  opacity: 1;
+
+}
+
+.doooots button:focus {
+  background-color: red;
+  opacity: 1;
+
+}
+
+.doooots button.active {
+  background-color: red;
+  opacity: 1;
+
+}
+
+.a7002{
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+  border-radius: 8px;
+  
+}
+
+
+.a7002 div {
+  background-color: #333333;
+  opacity: 0.5;
+  border: none;
+ 
+  cursor: pointer;
+  height: 3px;
+  margin: 0 0px;
+  padding: 0;
+  width: 15px;
+}
+
+.a7002 div.active {
+  background-color: red;
+  opacity: 1;
+
+}
+
+.strond{
+  border-radius: 20px 0px 0px 20px;
+}
+
+.strond2{
+  border-radius: 0px 20px 20px 0px;
+}
+/* .bitch{
+background-image: linear-gradient(to top right, #1A1A1A, #E50000) ;
+
+} */
+
+.grain {
+  background-image: linear-gradient(
+    35deg,
+    hsl(0deg 0% 6%) 56%,
+    hsl(15deg 36% 10%) 85%,
+    hsl(13deg 51% 13%) 94%,
+    hsl(12deg 60% 16%) 98%,
+    hsl(11deg 66% 19%) 100%,
+    hsl(10deg 72% 23%) 101%,
+    hsl(9deg 77% 26%) 102%,
+    hsl(8deg 81% 29%) 102%,
+    hsl(7deg 85% 33%) 102%,
+    hsl(6deg 88% 36%) 101%,
+    hsl(5deg 92% 39%) 101%,
+    hsl(3deg 96% 42%) 100%,
+    hsl(0deg 100% 45%) 100%
+  );
+}
+
+.grain2 {
+  background-image: linear-gradient(
+    310deg,
+    hsl(0deg 0% 8%) 0%,
+    hsl(12deg 45% 14%) 84%,
+    hsl(11deg 63% 21%) 95%,
+    hsl(9deg 74% 27%) 99%,
+    hsl(7deg 83% 33%) 100%,
+    hsl(5deg 91% 39%) 100%,
+    hsl(0deg 100% 45%) 100%
+  );
+}
