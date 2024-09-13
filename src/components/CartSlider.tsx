@@ -49,8 +49,7 @@ function CartSlider({ children }: Props) {
             Explore our wide variety of categories
           </h2>
           <p className="text-[14px] text-[#999999] lg:w-[90%]">
-            Whether you're looking for a comedy to make you laugh, a drama to
-            make you think, or a documentary to learn something new
+          Whether you&apos;re looking for a comedy to make you laugh, a drama to make you think, or a documentary to learn something new
           </p>
         </div>
         <div className="hidden h-[55px] w-[19%] items-center justify-evenly rounded-[12px] bg-[#0F0F0F] text-white lg:flex">

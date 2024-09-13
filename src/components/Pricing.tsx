@@ -11,7 +11,7 @@ const Pricing = (props: Props) => {
       <div className="flex flex-col md:flex-row justify-between sm:mb-[50px]">
         <div className="ml-[9px]">
           <h3 className="text-[24px] text-white md:text-[28px] lg:text-[38px]">
-            Choose the plan that's right for you
+            Choose the plan that&apos;s right for you
           </h3>
           <p className="w-[90%] text-[14px] text-[#999999] md:text-[16px] lg:text-[18px] mb-[20px]">
             Join StreamVibe and select from our flexible subscription options

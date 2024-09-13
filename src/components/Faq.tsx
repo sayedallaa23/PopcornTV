@@ -12,7 +12,7 @@ function Faq({}: Props) {
             Frequently Asked Questions
           </h3>
           <p className="w-[80%] text-[14px] text-[#999999] md:text-[16px] lg:text-[18px]">
-            Got questions? We've got answers! Check out our FAQ section to find
+            Got questions? We&apos;ve got answers! Check out our FAQ section to find
             answers to the most common questions about StreamVibe.
           </p>
         </div>

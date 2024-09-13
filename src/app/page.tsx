@@ -130,7 +130,7 @@ export default function Home() {
       setmovies(newMovies);
     };
     fetchData();
-  }, []);
+  }, [genres]);
 
   return (
     <main className="flex-row items-center justify-center">
@@ -172,7 +172,7 @@ export default function Home() {
       <div className="home-slick mx-auto mb-[10%] w-[80vw]">
         <CartSlider>
           {movies.map((movie, index) => (
-            <div className="rounded-[10px] bg-[#1A1A1A] pl-[20px] pr-[25px] pt-[20px] text-white">
+            <div className="rounded-[10px] bg-[#1A1A1A] pl-[20px] pr-[25px] pt-[20px] text-white" key={index}>
               <Link href={`/${movie.genre.toLowerCase()}`}>
                 <div className="flex flex-col gap-2">
                   <div className="flex gap-2">
