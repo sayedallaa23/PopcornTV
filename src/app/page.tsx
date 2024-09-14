@@ -13,14 +13,6 @@ import Platforms from "@/components/Platforms";
 import Faq from "@/components/Faq";
 
 export default function Home() {
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: process.env.API_KEY,
-    },
-  };
-
   const genres = [
     {
       id: 28,
