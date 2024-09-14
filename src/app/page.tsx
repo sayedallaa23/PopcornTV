@@ -144,15 +144,14 @@ export default function Home() {
           The Best Streaming Experience
         </h2>
         <p className="mx-auto mb-9 mt-5 hidden w-[90%] text-[18px] text-[#999999] lg:block xl:w-[70%]">
-          StreamVibe is the best streaming experience for watching your favorite
-          movies and shows on demand, anytime, anywhere. With StreamVibe, you
-          can enjoy a wide variety of content, including the latest
-          blockbusters, classic movies, popular TV shows, and more. You can also
-          create your own watchlists, so you can easily find the content you
-          want to watch.
+          PopcornTv is the best streaming experience for watching your favorite
+          movies and shows on demand, anytime, anywhere. With PopcornTv, you can
+          enjoy a wide variety of content, including the latest blockbusters,
+          classic movies, popular TV shows, and more. You can also create your
+          own watchlists, so you can easily find the content you want to watch.
         </p>
         <p className="mb-9 text-[14px] text-[#999999] lg:hidden">
-          StreamVibe is the best streaming experience for watching your favorite
+          PopcornTv is the best streaming experience for watching your favorite
           movies and shows on demand, anytime, anywhere.
         </p>
         <Link href={"/media"}>

@@ -17,7 +17,7 @@ function Faq({}: Props) {
           </h3>
           <p className="w-[80%] text-[14px] text-[#999999] md:text-[16px] lg:text-[18px]">
             Got questions? We&apos;ve got answers! Check out our FAQ section to
-            find answers to the most common questions about StreamVibe.
+            find answers to the most common questions about PopcornTv.
           </p>
         </div>
         <button className="mt-[20px] flex h-[49px] w-[140px] items-center justify-center rounded-md bg-[#E50000] p-3 text-[13px] text-white">

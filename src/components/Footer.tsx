@@ -117,10 +117,10 @@ export default function Footer({}: Props) {
         </div>
       </div>
       <div className="mx-auto mb-[20px] w-[100%] border-2 border-b-0 border-l-0 border-r-0 border-t-[#262626] lg:mb-[30px] lg:mt-[100px] lg:w-[100%]"></div>
-      <div className="justify-between md:mx-auto md:flex md:w-[100%] items-center">
+      <div className="items-center justify-between md:mx-auto md:flex md:w-[100%]">
         <div>
-          <p className="mb-[20px] md:mb-0 text-[14px] text-[#999999]">
-            @2023 streamvib, All Rights Reserved
+          <p className="mb-[20px] text-[14px] text-[#999999] md:mb-0">
+            @2023 PopcornTv, All Rights Reserved
           </p>
         </div>
         <div className="flex items-center">

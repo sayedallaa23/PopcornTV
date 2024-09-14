@@ -10,12 +10,12 @@ type Props = {};
 function Platforms({}: Props) {
   return (
     <div className="mb-[5rem]">
-      <div className="mx-auto w-[88%] md:w-[82%] mb-[4rem]">
-        <h3 className="text-[24px] text-white md:text-[28px] lg:text-[38px] mb-[10px]">
+      <div className="mx-auto mb-[4rem] w-[88%] md:w-[82%]">
+        <h3 className="mb-[10px] text-[24px] text-white md:text-[28px] lg:text-[38px]">
           We Provide you streaming experience across various devices.
         </h3>
         <p className="mb-[20px] w-[90%] text-[14px] text-[#999999] md:text-[16px] lg:text-[18px]">
-          With StreamVibe, you can enjoy your favorite movies and TV shows
+          With PopcornTv, you can enjoy your favorite movies and TV shows
           anytime, anywhere.
         </p>
       </div>
@@ -30,7 +30,7 @@ function Platforms({}: Props) {
             </h4>
           </div>
           <p className="text-[14px] text-[#999999]">
-            StreamVibe is optimized for both Android and iOS smartphones.
+            PopcornTv is optimized for both Android and iOS smartphones.
             Download our app from the Google Play Store or the Apple App Store
           </p>
         </div>
@@ -44,7 +44,7 @@ function Platforms({}: Props) {
             </h4>
           </div>
           <p className="text-[14px] text-[#999999]">
-            StreamVibe is optimized for both Android and iOS smartphones.
+            PopcornTv is optimized for both Android and iOS smartphones.
             Download our app from the Google Play Store or the Apple App Store
           </p>
         </div>
@@ -58,7 +58,7 @@ function Platforms({}: Props) {
             </h4>
           </div>
           <p className="text-[14px] text-[#999999]">
-            StreamVibe is optimized for both Android and iOS smartphones.
+            PopcornTv is optimized for both Android and iOS smartphones.
             Download our app from the Google Play Store or the Apple App Store
           </p>
         </div>
@@ -72,7 +72,7 @@ function Platforms({}: Props) {
             </h4>
           </div>
           <p className="text-[14px] text-[#999999]">
-            StreamVibe is optimized for both Android and iOS smartphones.
+            PopcornTv is optimized for both Android and iOS smartphones.
             Download our app from the Google Play Store or the Apple App Store
           </p>
         </div>
@@ -86,7 +86,7 @@ function Platforms({}: Props) {
             </h4>
           </div>
           <p className="text-[14px] text-[#999999]">
-            StreamVibe is optimized for both Android and iOS smartphones.
+            PopcornTv is optimized for both Android and iOS smartphones.
             Download our app from the Google Play Store or the Apple App Store
           </p>
         </div>
@@ -100,7 +100,7 @@ function Platforms({}: Props) {
             </h4>
           </div>
           <p className="text-[14px] text-[#999999]">
-            StreamVibe is optimized for both Android and iOS smartphones.
+            PopcornTv is optimized for both Android and iOS smartphones.
             Download our app from the Google Play Store or the Apple App Store
           </p>
         </div>
