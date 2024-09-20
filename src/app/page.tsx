@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { FaPlay } from "react-icons/fa";
 import Pricing from "@/components/Pricing";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import CartSlider from "@/components/CartSlider";
 import { log } from "console";
 import Link from "next/link";
@@ -11,120 +11,10 @@ import SamplePrevArrow from "@/components/CartSlider";
 import SampleNextArrow from "@/components/CartSlider";
 import Platforms from "@/components/Platforms";
 import Faq from "@/components/Faq";
+import { MoviesContext, genres } from "@/store/MoviesContextProvider";
 
 export default function Home() {
-  const genres = [
-    {
-      id: 28,
-      name: "Action",
-    },
-    {
-      id: 12,
-      name: "Adventure",
-    },
-    {
-      id: 16,
-      name: "Animation",
-    },
-    {
-      id: 35,
-      name: "Comedy",
-    },
-    {
-      id: 80,
-      name: "Crime",
-    },
-    {
-      id: 99,
-      name: "Documentary",
-    },
-    {
-      id: 18,
-      name: "Drama",
-    },
-    {
-      id: 10751,
-      name: "Family",
-    },
-    {
-      id: 14,
-      name: "Fantasy",
-    },
-    {
-      id: 36,
-      name: "History",
-    },
-    {
-      id: 27,
-      name: "Horror",
-    },
-    {
-      id: 10402,
-      name: "Music",
-    },
-    {
-      id: 9648,
-      name: "Mystery",
-    },
-    {
-      id: 10749,
-      name: "Romance",
-    },
-    {
-      id: 878,
-      name: "Science Fiction",
-    },
-    {
-      id: 10770,
-      name: "TV Movie",
-    },
-    {
-      id: 53,
-      name: "Thriller",
-    },
-    {
-      id: 10752,
-      name: "War",
-    },
-    {
-      id: 37,
-      name: "Western",
-    },
-  ];
-  const [movies, setmovies] = useState<any[]>([]);
-  const token = process.env.NEXT_PUBLIC_TOKEN;
-
-  if (!token) {
-    throw new Error("Authorization token is missing");
-  }
-
-  const getData = async (catnum: number) => {
-    const options = {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    const response = await fetch(
-      `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${catnum}`,
-      options,
-    );
-    const data = await response.json();
-    return data.results;
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const newMovies = [];
-      for (const genre of genres) {
-        const data = await getData(genre.id);
-        newMovies.push({ genre: genre.name, movies: data });
-      }
-      setmovies(newMovies);
-    };
-    fetchData();
-  }, [genres]);
+  const { moviesList, setmoviesList } = useContext(MoviesContext);
 
   return (
     <main className="flex-row items-center justify-center">
@@ -164,13 +54,15 @@ export default function Home() {
 
       <div className="home-slick mx-auto mb-[10%] w-[80vw]">
         <CartSlider>
-          {movies.map((movie, index) => (
+          {moviesList.map((movie, index) => (
             <div
               className="rounded-[10px] bg-[#1A1A1A] pl-[20px] pr-[25px] pt-[20px] text-white"
               key={index}
             >
               {movie.movies && movie.movies.length > 0 && (
-                <Link href={`/${movie.genre.toLowerCase()}`}>
+                <Link
+                  href={`/discover/${index + 1}/${movie.genre.toLowerCase()}`}
+                >
                   <div className="flex flex-col gap-2">
                     <div className="flex gap-2">
                       <Image

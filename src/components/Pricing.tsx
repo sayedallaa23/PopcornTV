@@ -59,7 +59,7 @@ const Pricing = (props: Props) => {
         />
         <PriceCard
           plan="Premium Plan"
-          price={monthly ? 14.99 : 100.99}
+          price={monthly ? 14.99 : 120.99}
           description="Access to a widest selection of movies and shows, including all new releases and exclusive content and Offline Viewing"
           period={monthly ? "month" : "year"}
         />

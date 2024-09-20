@@ -70,26 +70,26 @@ function CartSlider({ children }: Props) {
           <div className="doooots">
             <button
               onClick={() => {
-                (sliderRef.current as any)?.slickGoTo(0);
+                (slider as any)?.slickGoTo(0);
               }}
               className={activeSlide == 0 ? "active" : ""}
             ></button>
             <button
               className={activeSlide == 5 ? "active" : ""}
               onClick={() => {
-                (sliderRef.current as any)?.slickGoTo(5);
+                (slider as any)?.slickGoTo(5);
               }}
             ></button>
             <button
               className={activeSlide == 10 ? "active" : ""}
               onClick={() => {
-                (sliderRef.current as any)?.slickGoTo(10);
+                (slider as any)?.slickGoTo(10);
               }}
             ></button>
             <button
               className={activeSlide == 15 ? "active" : ""}
               onClick={() => {
-                (sliderRef.current as any)?.slickGoTo(15);
+                (slider as any)?.slickGoTo(15);
               }}
             ></button>
           </div>

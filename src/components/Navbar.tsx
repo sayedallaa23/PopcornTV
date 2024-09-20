@@ -14,7 +14,7 @@ export default function Navbar({}: Props) {
 
   return (
     <div className="relative z-10 flex items-center justify-between bg-transparent p-[15px] text-sm text-[#BFBFBF] sm:text-xl md:p-[15px] lg:ml-[3rem]">
-      <Link href={""}>
+      <Link href={"/"}>
         <div className="flex items-center justify-between">
           <PiPopcornBold className="mr-1 text-2xl text-[#E50000] sm:text-5xl" />
           PopcornTV
