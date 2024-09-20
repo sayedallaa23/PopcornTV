@@ -265,7 +265,7 @@ function MoviesContextProvider({ children }: Props) {
       setmoviesList(newMovies);
     };
     fetchData();
-  }, [getData, genres]);
+  }, [getData]);
 
   const value = useMemo(() => ({ moviesList, setmoviesList }), [moviesList, setmoviesList]);
   // useEffect(()=>{

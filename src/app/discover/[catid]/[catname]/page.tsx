@@ -11,7 +11,7 @@ type Props = {
   params: any;
 };
 
-function page({ params }: Props) {
+function Page({ params }: Props) {
   const { moviesList, setmoviesList } = useContext(MoviesContext);
   const moviestomap = moviesList[params.catid - 1];
 
@@ -81,4 +81,4 @@ function page({ params }: Props) {
   );
 }
 
-export default page;
+export default Page;

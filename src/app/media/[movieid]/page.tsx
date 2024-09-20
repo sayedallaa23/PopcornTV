@@ -13,7 +13,7 @@ type Props = {
   params: any;
 };
 
-function page({ params }: Props) {
+function Page({ params }: Props) {
   const [moviedata, setmoviedata] = useState<any>(null);
   const token = process.env.NEXT_PUBLIC_TOKEN;
 
@@ -68,17 +68,11 @@ function page({ params }: Props) {
         profile_path: writer.profile_path,
       });
 
-      // const reviews = moviedata.reviews.results;
-      
-
-      // console.log(directorData.name,"42")
     });
-  }, []);
+  }, [moviedata,params.movieid]);
   useEffect(() => {
     setUsersReviews(moviedata?.reviews.results);
-    console.log(usersReviews, "60"); // log the crew array to the console
-    console.log(moviedata,"line 80")
-    console.log(writerData,"line 81")
+    
   }, [moviedata,usersReviews,writerData]);
   return (
     <div className="">
@@ -464,4 +458,4 @@ function page({ params }: Props) {
   );
 }
 
-export default page;
+export default Page;
