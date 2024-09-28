@@ -55,10 +55,6 @@ function ReviewsSlider({ children }: Props) {
 
   return (
     <div className="text-white">
-      <div className="flex justify-between mb-5 items-center">
-        <p>Reviews</p>
-        <button className="bg-[#141414] p-4 rounded-[8px] border-[1px] border-[#262626]">Add Your Review</button>
-      </div>
       <Slider
         {...settings}
         ref={(slider) => {
@@ -67,7 +63,7 @@ function ReviewsSlider({ children }: Props) {
       >
         {children}
       </Slider>
-      <div className="flex h-[55px] w-[19%] items-center justify-evenly rounded-[12px] text-white sm:mx-auto ml-[30%]">
+      <div className="mx-auto flex h-[55px] w-[19%] items-center justify-evenly rounded-[12px] text-white">
         <button
           onClick={previous}
           className="rounded-[50%] bg-[#1A1A1A] p-[10px]"

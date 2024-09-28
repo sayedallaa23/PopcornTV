@@ -7,7 +7,7 @@ const Pricing = (props: Props) => {
   const [monthly, setMonthly] = useState(true);
   const [yearly, setYearly] = useState(false);
   return (
-    <div className="mx-auto mb-[4rem] w-[92%] md:w-[84%]">
+    <div className="mx-auto mb-[4rem]">
       <div className="flex flex-col justify-between sm:mb-[50px] md:flex-row">
         <div className="ml-[9px]">
           <h3 className="text-[24px] text-white md:text-[28px] lg:text-[38px]">

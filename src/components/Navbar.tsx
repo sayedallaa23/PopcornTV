@@ -31,8 +31,8 @@ export default function Navbar({}: Props) {
         </div>
         <div className="flex items-center justify-center text-center lg:p-2">
           <Link
-            href={"/media"}
-            className="rounded-[10px] pr-5 hover:bg-[#1A1A1A] focus:bg-[#1A1A1A] focus:text-white md:pr-10 lg:p-3"
+            href={"/media/categories"}
+            className={`rounded-[10px] pr-5 hover:bg-[#1A1A1A] focus:bg-[#1A1A1A] focus:text-white md:pr-10 lg:p-3 ${pathname == "/media/categories" ? "bg-[#1A1A1A]" : ""}`}
           >
             Movies & Shows
           </Link>
@@ -40,7 +40,7 @@ export default function Navbar({}: Props) {
         <div className="lg:p-2">
           <Link
             href={"/support"}
-            className="rounded-[10px] pr-5 hover:bg-[#1A1A1A] focus:bg-[#1A1A1A] focus:text-white md:pr-10 lg:p-3"
+            className={`rounded-[10px] pr-5 hover:bg-[#1A1A1A] focus:bg-[#1A1A1A] focus:text-white md:pr-10 lg:p-3 ${pathname == "/support" ? "bg-[#1A1A1A]" : ""}`}
           >
             Support
           </Link>
@@ -48,7 +48,7 @@ export default function Navbar({}: Props) {
         <div className="lg:p-2">
           <Link
             href={"/subscriptions"}
-            className="rounded-[10px] hover:bg-[#1A1A1A] focus:bg-[#1A1A1A] focus:text-white lg:p-3"
+            className={`rounded-[10px] hover:bg-[#1A1A1A] focus:bg-[#1A1A1A] focus:text-white lg:p-3 ${pathname == "/subscriptions" ? "bg-[#1A1A1A]" : ""}`}
           >
             Subscriptions
           </Link>

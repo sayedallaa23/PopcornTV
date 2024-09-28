@@ -7,9 +7,11 @@ import { FaArrowRight } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa";
 type Props = {
   children: any;
+  sliderHeader: any;
+  sliderDis?: any;
 };
 
-function CartSlider({ children }: Props) {
+function CartSlider({ children, sliderHeader, sliderDis }: Props) {
   const [oldSlide, setOldSlide] = useState(0);
   const [activeSlide, setActiveSlide] = useState(0);
   const [activeSlide2, setActiveSlide2] = useState(0);
@@ -52,13 +54,14 @@ function CartSlider({ children }: Props) {
     <div>
       <div className="mb-[3%] flex items-center justify-between">
         <div className="mb-5 md:mb-10">
-          <h2 className="mb-3 text-[24px] text-white md:text-[28px] lg:text-[38px]">
-            Explore our wide variety of categories
+          <h2 className="text-[24px] text-white md:text-[28px] lg:text-[38px]">
+            {sliderHeader}
           </h2>
-          <p className="text-[14px] text-[#999999] lg:w-[90%]">
-            Whether you&apos;re looking for a comedy to make you laugh, a drama
-            to make you think, or a documentary to learn something new
-          </p>
+          {sliderDis && (
+            <p className="mt-3 text-[14px] text-[#999999] lg:w-[90%]">
+              {sliderDis}
+            </p>
+          )}
         </div>
         <div className="hidden h-[55px] w-[19%] items-center justify-evenly rounded-[12px] bg-[#0F0F0F] text-white lg:flex">
           <button

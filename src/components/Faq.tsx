@@ -9,8 +9,8 @@ function Faq({}: Props) {
   );
 
   return (
-    <div className="mx-auto mb-[5rem] w-[88%] md:w-[82%]">
-      <div className="mb-[3rem] flex flex-col lg:flex-row">
+    <div className="mx-auto mb-[5rem]">
+      <div className="mb-[3rem] flex flex-col lg:flex-row justify-between">
         <div>
           <h3 className="text-[24px] text-white md:text-[28px] lg:text-[38px]">
             Frequently Asked Questions

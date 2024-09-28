@@ -18,20 +18,20 @@ body {
 
 .gradient-background:before {
   display: block;
-  content: '';
+  content: "";
   position: absolute;
   width: 100%;
   height: 100%;
   -webkit-box-shadow:
-    inset 0 200px 80px 0px rgba(0,0,0,0.1), /* bottom shadow */
-    inset 0 -200px 80px 0px rgba(0,0,0,0.1), /* top shadow */
-    inset 200px 0 80px 0px rgba(0,0,0,0.1), /* right shadow */
-    inset -200px 0 80px 0px rgba(0,0,0,0.1); /* left shadow */
+    inset 0 200px 80px 0px rgba(0, 0, 0, 0.1),
+    /* bottom shadow */ inset 0 -200px 80px 0px rgba(0, 0, 0, 0.1),
+    /* top shadow */ inset 200px 0 80px 0px rgba(0, 0, 0, 0.1),
+    /* right shadow */ inset -200px 0 80px 0px rgba(0, 0, 0, 0.1); /* left shadow */
   box-shadow:
-    inset 0 200px 80px 0px rgba(0,0,0,0.1),
-    inset 0 -200px 80px 0px rgba(0,0,0,0.1),
-    inset 200px 0 80px 0px rgba(0,0,0,0.1),
-    inset -200px 0 80px 0px rgba(0,0,0,0.1);
+    inset 0 200px 80px 0px rgba(0, 0, 0, 0.1),
+    inset 0 -200px 80px 0px rgba(0, 0, 0, 0.1),
+    inset 200px 0 80px 0px rgba(0, 0, 0, 0.1),
+    inset -200px 0 80px 0px rgba(0, 0, 0, 0.1);
 }
 
 .scrollable-element {
@@ -47,7 +47,6 @@ body {
 
 .slick-slide > div {
   padding: 0 7px !important;
-  
 }
 
 .slick-dots li button:before {
@@ -82,35 +81,30 @@ body {
 .doooots button:hover {
   background-color: red;
   opacity: 1;
-
 }
 
 .doooots button:focus {
   background-color: red;
   opacity: 1;
-
 }
 
 .doooots button.active {
   background-color: red;
   opacity: 1;
-
 }
 
-.a7002{
+.a7002 {
   display: flex;
   justify-content: center;
   margin-top: 25px;
   border-radius: 8px;
-  
 }
-
 
 .a7002 div {
   background-color: #333333;
   opacity: 0.5;
   border: none;
- 
+
   cursor: pointer;
   height: 3px;
   margin: 0 0px;
@@ -121,17 +115,15 @@ body {
 .a7002 div.active {
   background-color: red;
   opacity: 1;
-
 }
 
-.strond{
+.strond {
   border-radius: 20px 0px 0px 20px;
 }
 
-.strond2{
+.strond2 {
   border-radius: 0px 20px 20px 0px;
 }
-
 
 .grain {
   background-image: linear-gradient(
@@ -163,4 +155,43 @@ body {
     hsl(5deg 91% 39%) 100%,
     hsl(0deg 100% 45%) 100%
   );
+}
+
+.form-control {
+  background-color: #141414 !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+.flag-dropdown,
+.country-list {
+  background-color: #141414 !important;
+}
+.subs-page table * {
+  border: 1px solid #232222;
+  height: 50px;
+  padding: 10px;
+}
+
+.subs-page table th {
+  width: 25%;
+}
+
+.subs-page table td {
+  color: #999999;
+  font-size: 12px;
+  background-color: #1a1a1a;
+}
+.mob-pricing-table{
+  padding: 20px;
+  font-size: 14px;
+  border-radius: 8px;
+  
+}
+.mob-pricing-table .header {
+  color: #999999;
+}
+
+.mob-pricing-table *{
+  padding: 2px;
 }

@@ -59,21 +59,29 @@ function Page({ params }: Props) {
       const writer = data.credits.crew.find((member: any) => {
         return member.job == "Writer";
       });
-      setDirectorDate({
-        name: director.name,
-        profile_path: director.profile_path,
-      });
-      setWriterDate({
-        name: writer.name,
-        profile_path: writer.profile_path,
-      });
-
+      const apiReviews = moviedata?.reviews.results.slice(0, 6);
+      if (director) {
+        setDirectorDate({
+          name: director.name,
+          profile_path: director.profile_path,
+        });
+      }
+      if (writer) {
+        setWriterDate({
+          name: writer.name,
+          profile_path: writer.profile_path,
+        });
+      }
+      if (apiReviews) {
+        setUsersReviews(apiReviews);
+      }
     });
-  }, [moviedata,params.movieid]);
-  useEffect(() => {
-    setUsersReviews(moviedata?.reviews.results);
-    
-  }, [moviedata,usersReviews,writerData]);
+  }, [moviedata, params.movieid, usersReviews]);
+  // useEffect(() => {
+  //   // setUsersReviews(moviedata?.reviews.results.slice(0,6));
+  //   console.log(usersReviews,"line 79")
+
+  // }, [moviedata,usersReviews,writerData]);
   return (
     <div className="">
       <section className="relative bottom-[65px] sm:bottom-[115px]">
@@ -218,24 +226,25 @@ function Page({ params }: Props) {
                 </div>
               </div>
             </div>
-            {writerData.profile_path!==""&&
-            <div className="music">
-              <p className="my-2 text-[#999999]">Writer</p>
-              <div className="flex items-center">
-                <div>
-                  <Image
-                    src={`https://image.tmdb.org/t/p/original${writerData.profile_path}`}
-                    alt=""
-                    width={50}
-                    height={50}
-                    className="mr-1 h-[50px] w-[50px] rounded-[6px] object-cover"
-                  />
-                </div>
-                <div>
-                  <p>{writerData.name}</p>
+            {writerData.profile_path !== "" && (
+              <div className="music">
+                <p className="my-2 text-[#999999]">Writer</p>
+                <div className="flex items-center">
+                  <div>
+                    <Image
+                      src={`https://image.tmdb.org/t/p/original${writerData.profile_path}`}
+                      alt=""
+                      width={50}
+                      height={50}
+                      className="mr-1 h-[50px] w-[50px] rounded-[6px] object-cover"
+                    />
+                  </div>
+                  <div>
+                    <p>{writerData.name}</p>
+                  </div>
                 </div>
               </div>
-            </div>}
+            )}
           </div>
           <div className="cast-section mt-4 w-[100%] rounded-[10px] border-[1px] border-[#262626] bg-[#1A1A1A] p-7">
             <div>
@@ -262,42 +271,22 @@ function Page({ params }: Props) {
             </div>
           </div>
           <div className="reviwes-carousel mt-4 w-[100%] rounded-[10px] border-[1px] border-[#262626] bg-[#1A1A1A] p-7">
-            {/* <ReviewsSlider>
-              {usersReviews.filter((review:any)=>{
-                return (review.content.lenght <= 160)
-              }).map((rev: any, index) => (
-                <div className="p-5 bg-[#141414] rounded-[10px]">
-                  <div className="flex items-center justify-between">
-                    <div className="text-white">{rev.author}</div>
-                    <div className="flex items-center">
-                      <ReactStars
-                        count={5}
-                        value={rev && rev.author_details.rating / 2}
-                        size={15}
-                        color2={"#E50000"}
-                        edit={false}
-                        className="mr-2"
-                      />
-                      <div className="text-white">
-                        {moviedata && (moviedata.vote_average / 2).toFixed(2)}
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                   <p className="my-2 text-[#999999]">{rev&&rev.content}</p> 
-                  </div>
-                </div>
-              ))}
-            </ReviewsSlider> */}
+            <div className="mb-5 flex items-center justify-between text-white">
+              <p>Reviews</p>
+              <button className="rounded-[8px] border-[1px] border-[#262626] bg-[#141414] p-4">
+                Add Your Review
+              </button>
+            </div>
+            {usersReviews.length>1?
             <ReviewsSlider>
-              {usersReviews?.slice(0,6).map((rev: any, index) => (
+              {usersReviews?.map((rev: any, index) => (
                 <div
-                  className="h-[20vh] rounded-[10px] bg-[#141414] lg:h-[40vh] overflow-x-hidden overflow-y-scroll scrollable-element"
+                  className="scrollable-element h-[20vh] overflow-x-hidden overflow-y-scroll rounded-[10px] bg-[#141414] lg:h-[40vh]"
                   key={index}
                 >
                   <div className="m-5">
                     <div className="flex items-center justify-between">
-                      <div className="text-white text-[12px]">{rev.author}</div>
+                      <div className="text-[12px] text-white">{rev.author}</div>
                       <div className="flex items-center">
                         <ReactStars
                           count={5}
@@ -307,20 +296,20 @@ function Page({ params }: Props) {
                           edit={false}
                           className="mr-2"
                         />
-                        <p className="text-white text-[8px]">
+                        <p className="text-[8px] text-white">
                           {rev && (rev.author_details.rating / 2).toFixed(2)}
                         </p>
                       </div>
                     </div>
                     <div>
-                      <p className="my-2 text-[#999999] text-[12px]">
+                      <p className="my-2 text-[12px] text-[#999999]">
                         {rev && rev.content}
                       </p>
                     </div>
                   </div>
                 </div>
               ))}
-            </ReviewsSlider>
+            </ReviewsSlider>:<div className="text-white text-center">No available reviews</div>}
           </div>
         </div>
         <div className="right-sec details phone-hidden hidden rounded-[10px] border-[1px] border-[#262626] bg-[#1A1A1A] p-7 text-[14px] text-white lg:block">
@@ -332,38 +321,40 @@ function Page({ params }: Props) {
             <p className="my-2 text-[#999999]">Language</p>
             <div className="flex flex-wrap gap-2">
               {moviedata &&
-                moviedata.spoken_languages.filter((language:any)=>{
-                  return language.name !== ""
-                }).map(
-                  (
-                    lan: {
-                      name:
-                        | string
-                        | number
-                        | bigint
-                        | boolean
-                        | React.ReactElement<
-                            any,
-                            string | React.JSXElementConstructor<any>
-                          >
-                        | Iterable<React.ReactNode>
-                        | React.ReactPortal
-                        | Promise<React.AwaitedReactNode>
-                        | null
-                        | undefined;
+                moviedata.spoken_languages
+                  .filter((language: any) => {
+                    return language.name !== "";
+                  })
+                  .map(
+                    (
+                      lan: {
+                        name:
+                          | string
+                          | number
+                          | bigint
+                          | boolean
+                          | React.ReactElement<
+                              any,
+                              string | React.JSXElementConstructor<any>
+                            >
+                          | Iterable<React.ReactNode>
+                          | React.ReactPortal
+                          | Promise<React.AwaitedReactNode>
+                          | null
+                          | undefined;
+                      },
+                      index: React.Key | null | undefined,
+                    ) => {
+                      return (
+                        <p
+                          key={index}
+                          className="max-w-fit rounded-[6px] border-[1px] border-[#262626] bg-[#141414] p-2 text-white"
+                        >
+                          {lan.name}
+                        </p>
+                      );
                     },
-                    index: React.Key | null | undefined,
-                  ) => {
-                    return (
-                      <p
-                        key={index}
-                        className="max-w-fit rounded-[6px] border-[1px] border-[#262626] bg-[#141414] p-2 text-white"
-                      >
-                        {lan.name}
-                      </p>
-                    );
-                  },
-                )}
+                  )}
             </div>
           </div>
           <div className="rat">
@@ -380,7 +371,7 @@ function Page({ params }: Props) {
                     edit={false}
                     className="mr-2"
                   />
-                  <div className="text-white text-[10px]">
+                  <div className="text-[10px] text-white">
                     {moviedata && (moviedata.vote_average / 2).toFixed(2)}
                   </div>
                 </div>
@@ -396,7 +387,7 @@ function Page({ params }: Props) {
                     onChange={handleRating}
                     value={userRating as any}
                   />
-                  <div className="text-white  text-[10px]">
+                  <div className="text-[10px] text-white">
                     {userRating ? userRating : 0.0}
                   </div>
                 </div>
@@ -434,24 +425,25 @@ function Page({ params }: Props) {
               </div>
             </div>
           </div>
-          {writerData.profile_path!==""&&
-          <div className="music">
-            <p className="my-2 text-[#999999]">Writer</p>
-            <div className="flex items-center">
-              <div>
-                <Image
-                  src={`https://image.tmdb.org/t/p/original${writerData.profile_path}`}
-                  alt=""
-                  width={50}
-                  height={50}
-                  className="mr-1 h-[50px] w-[50px] rounded-[6px] object-cover"
-                />
-              </div>
-              <div>
-                <p>{writerData.name}</p>
+          {writerData.profile_path !== "" && (
+            <div className="music">
+              <p className="my-2 text-[#999999]">Writer</p>
+              <div className="flex items-center">
+                <div>
+                  <Image
+                    src={`https://image.tmdb.org/t/p/original${writerData.profile_path}`}
+                    alt=""
+                    width={50}
+                    height={50}
+                    className="mr-1 h-[50px] w-[50px] rounded-[6px] object-cover"
+                  />
+                </div>
+                <div>
+                  <p>{writerData.name}</p>
+                </div>
               </div>
             </div>
-          </div>}
+          )}
         </div>
       </div>
     </div>

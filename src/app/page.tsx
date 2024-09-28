@@ -53,7 +53,12 @@ export default function Home() {
       </div>
 
       <div className="home-slick mx-auto mb-[10%] w-[80vw]">
-        <CartSlider>
+        <CartSlider
+          sliderHeader="Explore our wide variety of categories"
+          sliderDis="
+            Whether you're looking for a comedy to make you laugh, a drama
+            to make you think, or a documentary to learn something new"
+        >
           {moviesList.map((movie, index) => (
             <div
               className="rounded-[10px] bg-[#1A1A1A] pl-[20px] pr-[25px] pt-[20px] text-white"
@@ -61,7 +66,7 @@ export default function Home() {
             >
               {movie.movies && movie.movies.length > 0 && (
                 <Link
-                  href={`/discover/${index + 1}/${movie.genre.toLowerCase()}`}
+                  href={`/discover/movies/${index + 1}/${movie.genre.toLowerCase()}`}
                 >
                   <div className="flex flex-col gap-2">
                     <div className="flex gap-2">
@@ -110,8 +115,13 @@ export default function Home() {
         </CartSlider>
       </div>
       <Platforms />
-      <Faq />
-      <Pricing />
+      <div className="mx-auto w-[90%] md:w-[84%]">
+        <Faq />
+      </div>
+
+      <div className="mx-auto w-[90%] md:w-[84%]">
+        <Pricing />
+      </div>
     </main>
   );
 }
