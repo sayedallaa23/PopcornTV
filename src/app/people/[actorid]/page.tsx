@@ -10,7 +10,7 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 type Props = { params: any };
 
-function page({ params }: Props) {
+function Page({ params }: Props) {
   const [actorDetails, setActorDetails] = useState<any>({});
   const token = process.env.NEXT_PUBLIC_TOKEN;
 
@@ -174,7 +174,7 @@ function page({ params }: Props) {
                 {actorDetails.combined_credits?.cast
                   .slice(0, 20)
                   .map((movie: any, index: any) => (
-                    <Link href={`/media/movies/${movie.id}`}>
+                    <Link href={`/media/movies/${movie.id}`} key={index}>
                       <Image
                         className="h-[95%] w-[100%] rounded-[10px] object-cover"
                         src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
@@ -203,4 +203,4 @@ function page({ params }: Props) {
   );
 }
 
-export default page;
+export default Page;
