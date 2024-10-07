@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 type Props = {};
 
@@ -23,11 +24,11 @@ const FreeTrial = (props: Props) => {
             sign up for a free trial of StreamVibe.
           </p>
         </div>
-        <div className="">
+        <Link href={"/subscriptions"}>
           <button className="mx-auto my-auto flex items-center justify-center rounded-md bg-[#E50000] p-3 text-white lg:mb-[40%]">
-            Start a Free Trail
+          Choose Your Plan
           </button>
-        </div>
+        </Link>
       </div>
     </div>
   );

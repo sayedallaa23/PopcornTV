@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Accordion, { AccordianItem } from "./Accordion";
-
+import Link from "next/link";
 type Props = {};
 
 function Faq({}: Props) {
@@ -9,8 +9,8 @@ function Faq({}: Props) {
   );
 
   return (
-    <div className="mx-auto mb-[5rem]">
-      <div className="mb-[3rem] flex flex-col lg:flex-row justify-between">
+    <div className="mx-auto mb-[5rem]" id="faq-secion">
+      <div className="mb-[3rem] flex flex-col justify-between lg:flex-row">
         <div>
           <h3 className="text-[24px] text-white md:text-[28px] lg:text-[38px]">
             Frequently Asked Questions
@@ -20,9 +20,11 @@ function Faq({}: Props) {
             find answers to the most common questions about PopcornTv.
           </p>
         </div>
-        <button className="mt-[20px] flex h-[49px] w-[140px] items-center justify-center rounded-md bg-[#E50000] p-3 text-[13px] text-white">
-          Ask a Question
-        </button>
+        <Link href={"#messages"}>
+          <button className="mt-[20px] flex h-[49px] w-[140px] items-center justify-center rounded-md bg-[#E50000] p-3 text-[13px] text-white">
+            Ask a Question
+          </button>
+        </Link>
       </div>
       <div className="flex flex-col justify-between lg:flex-row">
         <div className="w-[100%] lg:w-[45%]">

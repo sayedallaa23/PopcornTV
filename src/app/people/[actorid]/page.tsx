@@ -33,7 +33,7 @@ function Page({ params }: Props) {
     );
     const data = await response.json();
     setActorDetails(data);
-  }, [token]);
+  }, [token, apiOptions, params.actorid]);
   useEffect(() => {
     actorData();
   }, [actorData]);

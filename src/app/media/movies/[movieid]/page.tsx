@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { FaPlay } from "react-icons/fa";
 import { log } from "console";
@@ -8,15 +8,58 @@ import ReactStars from "react-stars";
 import CastSlider from "@/components/CastSlider";
 import Link from "next/link";
 import ReviewsSlider from "@/components/ReviewsSlider";
-
+// firebase
+import { onAuthStateChanged } from "firebase/auth";
+import { db, auth } from "../../../../store/firebase";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  doc,
+  getDoc,
+  setDoc,
+  deleteDoc,
+  DocumentData,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+} from "firebase/firestore";
+import ReactPlayer from "react-player";
+import { FaXmark } from "react-icons/fa6";
+import { IoIosAdd } from "react-icons/io";
+import { MdDeleteForever } from "react-icons/md";
+import { read } from "fs";
 type Props = {
   params: any;
 };
 
 function Page({ params }: Props) {
   const [moviedata, setmoviedata] = useState<any>(null);
-  const token = process.env.NEXT_PUBLIC_TOKEN;
+  const [usersReviews, setUsersReviews] = useState([]);
+  const [directorData, setDirectorDate] = useState({
+    name: "",
+    profile_path: "",
+  });
+  const [writerData, setWriterDate] = useState({
+    name: "",
+    profile_path: "",
+  });
+  const [basedb, setbasedb] = useState<{ data: DocumentData; id: string }[]>(
+    [],
+  );
+  const [movieTrailer, setMovieTrailer] = useState<any>(null);
+  const videoRef = useRef<ReactPlayer>(null);
+  const [isInWatchList, setIsInWatchList] = useState(false);
+  const [isInFavoriteList, setIsInFavoriteList] = useState(false);
 
+  const token = process.env.NEXT_PUBLIC_TOKEN;
+  const apiOptions = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
   if (!token) {
     throw new Error("Authorization token is missing");
   }
@@ -36,20 +79,122 @@ function Page({ params }: Props) {
     return data;
   };
 
-  const [directorData, setDirectorDate] = useState({
-    name: "",
-    profile_path: "",
-  });
-  const [writerData, setWriterDate] = useState({
-    name: "",
-    profile_path: "",
-  });
-  const [userRating, setUserRating] = useState(null);
-  const [usersReviews, setUsersReviews] = useState([]);
-  const handleRating = (rating: any) => {
-    setUserRating(rating?.toFixed(2));
+  const getMovieTrailer = useCallback(async () => {
+    const response = await fetch(
+      `https://api.themoviedb.org/3/movie/${params.movieid}/videos?language=en-US`,
+      apiOptions,
+    );
+    const data = await response.json();
+    return data.results;
+  }, [apiOptions, params.movieid]);
+
+  const youtubeRef = React.useRef(null);
+  function handlePopUp() {
+    if ((youtubeRef.current as any).style.display === "block") {
+      (youtubeRef.current as any).style.display = "none";
+    } else {
+      (youtubeRef.current as any).style.display = "block";
+    }
+  }
+
+  const username = String(auth.currentUser?.email);
+  const usersRef = doc(db, "users", username);
+
+  const addMovieToWatchList = async () => {
+    const userDoc = await getDoc(usersRef);
+    if (userDoc.exists()) {
+      const watchList = userDoc.data().moviesWatchList || [];
+      const movieExists = watchList.some(
+        (movie: { itemID: any }) => movie.itemID === params.movieid,
+      );
+      if (!movieExists) {
+        await setDoc(
+          usersRef,
+          {
+            moviesWatchList: arrayUnion({
+              itemID: params.movieid,
+              poster: moviedata.poster_path,
+              vote: moviedata.vote_average,
+              release: moviedata.release_date,
+            }),
+          },
+          { merge: true },
+        );
+      }
+    } else {
+      await setDoc(
+        usersRef,
+        {
+          moviesWatchList: arrayUnion({
+            itemID: params.movieid,
+            poster: moviedata.poster_path,
+            vote: moviedata.vote_average,
+            release: moviedata.release_date,
+          }),
+        },
+        { merge: true },
+      );
+    }
+  };
+  const removeMovieFromWatchList = async () => {
+    const movieToRemove = {
+      itemID: params.movieid,
+      poster: moviedata.poster_path,
+      vote: moviedata.vote_average,
+      release: moviedata.release_date,
+    };
+    await updateDoc(usersRef, {
+      moviesWatchList: arrayRemove(movieToRemove),
+    });
   };
 
+  const addMovieToFavoritesList = async () => {
+    const userDoc = await getDoc(usersRef);
+    if (userDoc.exists()) {
+      const favoritsList = userDoc.data().moviesFavoritesList || [];
+      const movieExists = favoritsList.some(
+        (movie: { itemID: any }) => movie.itemID === params.movieid,
+      );
+      if (!movieExists) {
+        await setDoc(
+          usersRef,
+          {
+            moviesFavoritesList: arrayUnion({
+              itemID: params.movieid,
+              poster: moviedata.poster_path,
+              vote: moviedata.vote_average,
+              release: moviedata.release_date,
+            }),
+          },
+          { merge: true },
+        );
+      }
+    } else {
+      await setDoc(
+        usersRef,
+        {
+          moviesFavoritesList: arrayUnion({
+            itemID: params.movieid,
+            poster: moviedata.poster_path,
+            vote: moviedata.vote_average,
+            release: moviedata.release_date,
+          }),
+        },
+        { merge: true },
+      );
+    }
+  };
+  const removeMovieFromFavoritesList = async () => {
+    const movieToRemove = {
+      itemID: params.movieid,
+      poster: moviedata.poster_path,
+      vote: moviedata.vote_average,
+      release: moviedata.release_date,
+    };
+    await updateDoc(usersRef, {
+      moviesFavoritesList: arrayRemove(movieToRemove),
+    });
+  };
   useEffect(() => {
     getData(params.movieid).then((data) => {
       setmoviedata(data);
@@ -75,13 +220,47 @@ function Page({ params }: Props) {
       if (apiReviews) {
         setUsersReviews(apiReviews);
       }
-    });
-  }, [moviedata, params.movieid, usersReviews]);
-  // useEffect(() => {
-  //   // setUsersReviews(moviedata?.reviews.results.slice(0,6));
-  //   console.log(usersReviews,"line 79")
 
-  // }, [moviedata,usersReviews,writerData]);
+      const fetchMovieTrailer = async () => {
+        const data = await getMovieTrailer();
+        setMovieTrailer(
+          data.find((x: any) => {
+            return x.type.toLowerCase() === "trailer";
+          }),
+        );
+      };
+      fetchMovieTrailer();
+    });
+  }, []);
+
+  useEffect(() => {
+    const checkWatchList = async () => {
+      const username = String(auth.currentUser?.email);
+      const usersRef = doc(db, "users", username);
+      const userDoc = await getDoc(usersRef);
+      if (userDoc.exists()) {
+        const watchList = userDoc.data().moviesWatchList || [];
+        const movieExists = watchList.some(
+          (movie: { itemID: any }) => movie.itemID === params.movieid,
+        );
+        setIsInWatchList(movieExists);
+      }
+    };
+    const checkFavoritesList = async () => {
+      const username = String(auth.currentUser?.email);
+      const usersRef = doc(db, "users", username);
+      const userDoc = await getDoc(usersRef);
+      if (userDoc.exists()) {
+        const favoritsList = userDoc.data().moviesFavoritesList || [];
+        const movieExists = favoritsList.some(
+          (movie: { itemID: any }) => movie.itemID === params.movieid,
+        );
+        setIsInFavoriteList(movieExists);
+      }
+    };
+    checkWatchList();
+    checkFavoritesList();
+  }, [params.movieid, isInWatchList, isInFavoriteList]);
   return (
     <div className="">
       <section className="relative bottom-[65px] sm:bottom-[115px]">
@@ -95,6 +274,7 @@ function Page({ params }: Props) {
           />
         </div>
       </section>
+
       <div className="relative bottom-[13rem] mb-[-8rem] items-center justify-center text-center text-white sm:mb-[-11rem] md:bottom-[20rem] lg:bottom-[30rem] lg:mb-[-20rem]">
         <h2 className="mb-2 text-[28px] lg:text-[58px]">
           {moviedata && moviedata.original_title}
@@ -103,9 +283,14 @@ function Page({ params }: Props) {
           {moviedata && moviedata.overview}
         </p>
         <div>
-          <button className="m-auto flex items-center justify-center rounded-md bg-[#E50000] p-2 sm:p-3">
+          <button
+            className="m-auto flex items-center justify-center rounded-md bg-[#E50000] p-2 sm:p-3"
+            onClick={() => {
+              handlePopUp();
+            }}
+          >
             <FaPlay className="m-[8px]" />
-            Start Watching Now
+            Watch Trailer
           </button>
         </div>
       </div>
@@ -177,7 +362,7 @@ function Page({ params }: Props) {
                     </div>
                   </div>
                 </div>
-                <div className="popcorn rounded-[6px] border-[1px] border-[#262626] bg-[rgb(20,20,20)] p-3">
+                {/* <div className="popcorn rounded-[6px] border-[1px] border-[#262626] bg-[rgb(20,20,20)] p-3">
                   <p className="text-white">PopcornTv</p>
                   <div className="flex items-center">
                     <ReactStars
@@ -192,7 +377,7 @@ function Page({ params }: Props) {
                       {userRating ? userRating : 0.0}
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="genres">
@@ -245,6 +430,49 @@ function Page({ params }: Props) {
                 </div>
               </div>
             )}
+            <div className="mt-[10%] flex justify-between">
+              {isInWatchList ? (
+                <button
+                  onClick={() => {
+                    removeMovieFromWatchList();
+                  }}
+                  className="flex items-center justify-between rounded-[8px] border-[1px] border-[#262626] bg-[#141414] p-4"
+                >
+                  <MdDeleteForever className="mr-1 text-[#E50000]" /> WatchList
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    addMovieToWatchList();
+                  }}
+                  className="flex items-center justify-between rounded-[8px] border-[1px] border-[#262626] bg-[#141414] p-4"
+                >
+                  <IoIosAdd className="mr-1" />
+                  watch List
+                </button>
+              )}
+
+              {isInFavoriteList ? (
+                <button
+                  onClick={() => {
+                    removeMovieFromFavoritesList();
+                  }}
+                  className="flex items-center justify-between rounded-[8px] border-[1px] border-[#262626] bg-[#141414] p-4"
+                >
+                  <MdDeleteForever className="mr-1 text-[#E50000]" /> Favorites
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    addMovieToFavoritesList();
+                  }}
+                  className="flex items-center justify-between rounded-[8px] border-[1px] border-[#262626] bg-[#141414] p-4"
+                >
+                  <IoIosAdd className="mr-1" />
+                  Favorite
+                </button>
+              )}
+            </div>
           </div>
           <div className="cast-section mt-4 w-[100%] rounded-[10px] border-[1px] border-[#262626] bg-[#1A1A1A] p-7">
             <div>
@@ -273,43 +501,48 @@ function Page({ params }: Props) {
           <div className="reviwes-carousel mt-4 w-[100%] rounded-[10px] border-[1px] border-[#262626] bg-[#1A1A1A] p-7">
             <div className="mb-5 flex items-center justify-between text-white">
               <p>Reviews</p>
-              <button className="rounded-[8px] border-[1px] border-[#262626] bg-[#141414] p-4">
+              {/* <button className="rounded-[8px] border-[1px] border-[#262626] bg-[#141414] p-4">
                 Add Your Review
-              </button>
+              </button> */}
             </div>
-            {usersReviews.length>1?
-            <ReviewsSlider>
-              {usersReviews?.map((rev: any, index) => (
-                <div
-                  className="scrollable-element h-[20vh] overflow-x-hidden overflow-y-scroll rounded-[10px] bg-[#141414] lg:h-[40vh]"
-                  key={index}
-                >
-                  <div className="m-5">
-                    <div className="flex items-center justify-between">
-                      <div className="text-[12px] text-white">{rev.author}</div>
-                      <div className="flex items-center">
-                        <ReactStars
-                          count={5}
-                          value={rev && rev.author_details.rating / 2}
-                          size={15}
-                          color2={"#E50000"}
-                          edit={false}
-                          className="mr-2"
-                        />
-                        <p className="text-[8px] text-white">
-                          {rev && (rev.author_details.rating / 2).toFixed(2)}
+            {usersReviews.length > 1 ? (
+              <ReviewsSlider>
+                {usersReviews?.map((rev: any, index) => (
+                  <div
+                    className="scrollable-element h-[20vh] overflow-x-hidden overflow-y-scroll rounded-[10px] bg-[#141414] lg:h-[40vh]"
+                    key={index}
+                  >
+                    <div className="m-5">
+                      <div className="flex items-center justify-between">
+                        <div className="text-[12px] text-white">
+                          {rev.author}
+                        </div>
+                        <div className="flex items-center">
+                          <ReactStars
+                            count={5}
+                            value={rev && rev.author_details.rating / 2}
+                            size={15}
+                            color2={"#E50000"}
+                            edit={false}
+                            className="mr-2"
+                          />
+                          <p className="text-[8px] text-white">
+                            {rev && (rev.author_details.rating / 2).toFixed(2)}
+                          </p>
+                        </div>
+                      </div>
+                      <div>
+                        <p className="my-2 text-[12px] text-[#999999]">
+                          {rev && rev.content}
                         </p>
                       </div>
                     </div>
-                    <div>
-                      <p className="my-2 text-[12px] text-[#999999]">
-                        {rev && rev.content}
-                      </p>
-                    </div>
                   </div>
-                </div>
-              ))}
-            </ReviewsSlider>:<div className="text-white text-center">No available reviews</div>}
+                ))}
+              </ReviewsSlider>
+            ) : (
+              <div className="text-center text-white">No available reviews</div>
+            )}
           </div>
         </div>
         <div className="right-sec details phone-hidden hidden rounded-[10px] border-[1px] border-[#262626] bg-[#1A1A1A] p-7 text-[14px] text-white lg:block">
@@ -376,6 +609,7 @@ function Page({ params }: Props) {
                   </div>
                 </div>
               </div>
+              {/*  
               <div className="popcorn rounded-[6px] border-[1px] border-[#262626] bg-[rgb(20,20,20)] p-3">
                 <p className="text-white">PopcornTv</p>
                 <div className="flex items-center">
@@ -391,7 +625,7 @@ function Page({ params }: Props) {
                     {userRating ? userRating : 0.0}
                   </div>
                 </div>
-              </div>
+              </div>*/}
             </div>
           </div>
           <div className="genres">
@@ -444,7 +678,73 @@ function Page({ params }: Props) {
               </div>
             </div>
           )}
+          <div className="mt-[10%] flex justify-between">
+            {isInWatchList ? (
+              <button
+                onClick={() => {
+                  removeMovieFromWatchList();
+                }}
+                className="flex items-center justify-between rounded-[8px] border-[1px] border-[#262626] bg-[#141414] p-4"
+              >
+                <MdDeleteForever className="mr-1 text-[#E50000]" /> WatchList
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  addMovieToWatchList();
+                }}
+                className="flex items-center justify-between rounded-[8px] border-[1px] border-[#262626] bg-[#141414] p-4"
+              >
+                <IoIosAdd className="mr-1" />
+                watch List
+              </button>
+            )}
+
+            {isInFavoriteList ? (
+              <button
+                onClick={() => {
+                  removeMovieFromFavoritesList();
+                }}
+                className="flex items-center justify-between rounded-[8px] border-[1px] border-[#262626] bg-[#141414] p-4"
+              >
+                <MdDeleteForever className="mr-1 text-[#E50000]" /> Favorites
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  addMovieToFavoritesList();
+                }}
+                className="flex items-center justify-between rounded-[8px] border-[1px] border-[#262626] bg-[#141414] p-4"
+              >
+                <IoIosAdd className="mr-1" />
+                Favorite
+              </button>
+            )}
+          </div>
         </div>
+      </div>
+      <div
+        className="fixed left-0 right-0 top-[3rem] z-50 mx-auto hidden h-[25vh] lg:h-[80vh] lg:max-w-screen-lg"
+        ref={youtubeRef}
+      >
+        <div className="flex w-[100%]">
+          <FaXmark
+            className="ml-[98%] cursor-pointer text-[40px] text-white"
+            onClick={() => {
+              handlePopUp();
+              if (videoRef.current) {
+                videoRef.current.getInternalPlayer().pauseVideo();
+              }
+            }}
+          />
+        </div>
+        <ReactPlayer
+          url={`https://www.youtube.com/watch?v=${movieTrailer?.key}`}
+          controls={true}
+          width="100%"
+          height="100%"
+          ref={videoRef}
+        />
       </div>
     </div>
   );

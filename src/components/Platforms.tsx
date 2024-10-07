@@ -9,7 +9,7 @@ type Props = {};
 
 function Platforms({}: Props) {
   return (
-    <div className="mb-[5rem]">
+    <div className="mb-[5rem]" id="platforms-section">
       <div className="mx-auto mb-[4rem] w-[88%] md:w-[82%]">
         <h3 className="mb-[10px] text-[24px] text-white md:text-[28px] lg:text-[38px]">
           We Provide you streaming experience across various devices.

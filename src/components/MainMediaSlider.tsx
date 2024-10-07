@@ -31,7 +31,6 @@ function MainMediaSlider({}: Props) {
     },
   };
 
-
   const next = () => {
     if (slider) {
       slider.slickNext();
@@ -71,9 +70,12 @@ function MainMediaSlider({}: Props) {
     )
       .then((response) => response.json())
       .then((response) => setSlides(response.results));
-  }, []);
+  }, [options]);
+  useEffect(() => {
+    console.log(slides, "line 76");
+  }, [slides]);
   return (
-    <div className="relative xl:mb-[-12rem] mb-[-4rem] text-center">
+    <div className="relative mb-[-4rem] text-center xl:mb-[-12rem]">
       <Slider
         {...settings}
         ref={(slider) => {
@@ -93,10 +95,12 @@ function MainMediaSlider({}: Props) {
               <h1 className="text-[28px] lg:text-[58px]">
                 {movie.original_name || movie.original_title}
               </h1>
-              <p className="mx-auto mb-9 mt-5 hidden text-[#999999] md:text-[18px] lg:block xl:w-[70%]">
+              <p className="mx-auto mb-5 mt-5 hidden text-[#999999] md:text-[18px] lg:block xl:w-[70%]">
                 {movie.overview}
               </p>
-              <Link href={"/media"}>
+              <Link
+                href={`/media/${movie.media_type == "movie" ? "movies/" : "shows/"}${movie.id}`}
+              >
                 <button className="m-auto flex items-center justify-center rounded-md bg-[#E50000] p-3">
                   <FaPlay className="m-[8px]" />
                   Start Watching Now
@@ -106,7 +110,7 @@ function MainMediaSlider({}: Props) {
           </div>
         ))}
       </Slider>
-      <div className="relative bottom-[22rem] mx-auto hidden h-[55px] w-[95%] items-center justify-between rounded-[12px] lg:flex">
+      <div className="relative bottom-[21rem] mx-auto hidden h-[55px] w-[95%] items-center justify-between rounded-[12px] lg:flex">
         <button
           onClick={previous}
           className="rounded-[50%] bg-[#1A1A1A] p-[10px]"

@@ -182,16 +182,40 @@ body {
   font-size: 12px;
   background-color: #1a1a1a;
 }
-.mob-pricing-table{
+.mob-pricing-table {
   padding: 20px;
   font-size: 14px;
   border-radius: 8px;
-  
 }
 .mob-pricing-table .header {
   color: #999999;
 }
 
-.mob-pricing-table *{
+.mob-pricing-table * {
   padding: 2px;
+}
+
+.country-list :hover {
+  background-color: rgb(117, 112, 112) !important;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+.is-dark {
+  opacity: 0.6;
+  cursor: default;
+  pointer-events: none;
+}
+
+
+.scrollable-element-red {
+  scrollbar-width: 20px;
+}
+.scrollable-element-red::-webkit-scrollbar {
+  width: 20px;
+}
+.scrollable-element-red::-webkit-scrollbar-thumb {
+  background-color: #e50000;
 }

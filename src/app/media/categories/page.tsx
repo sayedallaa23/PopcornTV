@@ -70,7 +70,7 @@ function Page({}: Props) {
         <div className="absolute left-[2.5rem] top-[-1.2rem] hidden w-fit rounded-[8px] bg-[#E50000] px-[20px] py-[8px] lg:block">
           Movies
         </div>
-        <div className="genres-slick mx-auto mb-[10%] w-[80vw] lg:px-[15px] lg:py-[50px]">
+        <div className="genres-slick mx-auto mb-[10%] w-[80vw] lg:px-[15px] lg:py-[50px]" id="movies-genres">
           <CartSlider sliderHeader={"Our Genres"} sliderDis={""}>
             {moviesList.map((movie, index) => (
               <div
@@ -127,7 +127,7 @@ function Page({}: Props) {
             ))}
           </CartSlider>
         </div>
-        <div className="trending-slick mx-auto mb-[10%] w-[80vw] lg:px-[15px]">
+        <div className="trending-slick mx-auto mb-[10%] w-[80vw] lg:px-[15px]" id="movies-trending">
           <CartSlider sliderHeader={"Trending Now"} sliderDis={""}>
             {trendingMoviesList.map((movie: any, index: any) => (
               <div
@@ -155,7 +155,7 @@ function Page({}: Props) {
             ))}
           </CartSlider>
         </div>
-        <div className="top-rated-slick mx-auto mb-[10%] w-[80vw] lg:px-[15px]">
+        <div className="top-rated-slick mx-auto mb-[10%] w-[80vw] lg:px-[15px]" id="movies-top-rated">
           <CartSlider sliderHeader={"Top Rated"} sliderDis={""}>
             {topRatedMovies.map((movie: any, index: any) => (
               <div
@@ -183,7 +183,7 @@ function Page({}: Props) {
             ))}
           </CartSlider>
         </div>
-        <div className="popular-slick mx-auto mb-[20px] w-[80vw] lg:px-[15px]">
+        <div className="popular-slick mx-auto mb-[20px] w-[80vw] lg:px-[15px]" id="movies-popular">
           <CartSlider sliderHeader={"Popular Now"} sliderDis={""}>
             {popularMoviesList.map((movie: any, index: any) => (
               <div
@@ -217,7 +217,7 @@ function Page({}: Props) {
         <div className="absolute left-[2.5rem] top-[-1.2rem] hidden w-fit rounded-[8px] bg-[#E50000] px-[20px] py-[8px] lg:block">
           Shows
         </div>
-        <div className="genres-slick mx-auto mb-[10%] w-[80vw] lg:px-[15px] lg:py-[50px]">
+        <div className="genres-slick mx-auto mb-[10%] w-[80vw] lg:px-[15px] lg:py-[50px]"id="shows-genres">
           <CartSlider sliderHeader={"Our Genres"} sliderDis={""}>
             {tvList.map((movie, index) => (
               <div
@@ -274,7 +274,7 @@ function Page({}: Props) {
             ))}
           </CartSlider>
         </div>
-        <div className="trending-slick mx-auto mb-[10%] w-[80vw] lg:px-[15px]">
+        <div className="trending-slick mx-auto mb-[10%] w-[80vw] lg:px-[15px]"id="shows-trending">
           <CartSlider sliderHeader={"Trending Now"} sliderDis={""}>
             {trendingTvList.map((movie: any, index: any) => (
               <div
@@ -302,7 +302,7 @@ function Page({}: Props) {
             ))}
           </CartSlider>
         </div>
-        <div className="top-rated-slick mx-auto mb-[20px] w-[80vw] lg:px-[15px]">
+        <div className="top-rated-slick mx-auto mb-[20px] w-[80vw] lg:px-[15px]"id="shows-top-rated">
           <CartSlider sliderHeader={"Top Rated"} sliderDis={""}>
             {topRatedTv.map((movie: any, index: any) => (
               <div
@@ -330,7 +330,7 @@ function Page({}: Props) {
             ))}
           </CartSlider>
         </div>
-        <div className="popular-slick mx-auto mb-[10%] w-[80vw] lg:px-[15px]">
+        <div className="popular-slick mx-auto mb-[10%] w-[80vw] lg:px-[15px]"id="shows-popular">
           <CartSlider sliderHeader={"Popular Now"} sliderDis={""}>
             {popularTvList.map((movie: any, index: any) => (
               <div

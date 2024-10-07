@@ -32,7 +32,7 @@ function Page({}: Props) {
             className="border-[2px] border-[#1A1A1A] object-cover"
           />
         </div>
-        <div className="right border-[2px] border-[#1A1A1A] bg-[#0F0F0F] p-9 lg:w-[58%] mt-[10%] lg:mt-0">
+        <div className="right border-[2px] border-[#1A1A1A] bg-[#0F0F0F] p-9 lg:w-[58%] mt-[10%] lg:mt-0" id="messages">
           <form action="">
             <div className="names flex flex-col justify-between lg:flex-row">
               <div className="fname">

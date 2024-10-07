@@ -89,72 +89,72 @@ export const genres = [
   },
 ];
 
-export const tvgenres= [
+export const tvgenres = [
   {
-    "id": 10759,
-    "name": "Action & Adventure"
+    id: 10759,
+    name: "Action & Adventure",
   },
   {
-    "id": 16,
-    "name": "Animation"
+    id: 16,
+    name: "Animation",
   },
   {
-    "id": 35,
-    "name": "Comedy"
+    id: 35,
+    name: "Comedy",
   },
   {
-    "id": 80,
-    "name": "Crime"
+    id: 80,
+    name: "Crime",
   },
   {
-    "id": 99,
-    "name": "Documentary"
+    id: 99,
+    name: "Documentary",
   },
   {
-    "id": 18,
-    "name": "Drama"
+    id: 18,
+    name: "Drama",
   },
   {
-    "id": 10751,
-    "name": "Family"
+    id: 10751,
+    name: "Family",
   },
   {
-    "id": 10762,
-    "name": "Kids"
+    id: 10762,
+    name: "Kids",
   },
   {
-    "id": 9648,
-    "name": "Mystery"
+    id: 9648,
+    name: "Mystery",
   },
   {
-    "id": 10763,
-    "name": "News"
+    id: 10763,
+    name: "News",
   },
   {
-    "id": 10764,
-    "name": "Reality"
+    id: 10764,
+    name: "Reality",
   },
   {
-    "id": 10765,
-    "name": "Sci-Fi & Fantasy"
+    id: 10765,
+    name: "Sci-Fi & Fantasy",
   },
   {
-    "id": 10766,
-    "name": "Soap"
+    id: 10766,
+    name: "Soap",
   },
   {
-    "id": 10767,
-    "name": "Talk"
+    id: 10767,
+    name: "Talk",
   },
   {
-    "id": 10768,
-    "name": "War & Politics"
+    id: 10768,
+    name: "War & Politics",
   },
   {
-    "id": 37,
-    "name": "Western"
-  }
-]
+    id: 37,
+    name: "Western",
+  },
+];
 
 type MoviesContextType = {
   // movies
@@ -195,7 +195,7 @@ export const MoviesContext = createContext<MoviesContextType>({
   topRatedTv: [],
   setTopRatedTv: () => {},
   popularTvList: [],
-  setPopularTv: () => {}
+  setPopularTv: () => {},
 });
 
 function MoviesContextProvider({ children }: Props) {
@@ -209,7 +209,6 @@ function MoviesContextProvider({ children }: Props) {
   const [trendingTvList, setTrendingTvList] = useState<any[]>([]);
   const [topRatedTv, setTopRatedTv] = useState<any[]>([]);
   const [popularTvList, setPopularTv] = useState<any[]>([]);
-
 
   const token = process.env.NEXT_PUBLIC_TOKEN;
 
@@ -253,7 +252,7 @@ function MoviesContextProvider({ children }: Props) {
     );
     const data = await response.json();
     return data.results;
-  }, [token]);
+  }, [token, apiOptions]);
 
   const topratedmovies = useCallback(async () => {
     const response = await fetch(
@@ -262,7 +261,7 @@ function MoviesContextProvider({ children }: Props) {
     );
     const data = await response.json();
     return data.results;
-  }, [token]);
+  }, [token, apiOptions]);
 
   const popularmovies = useCallback(async () => {
     const response = await fetch(
@@ -271,7 +270,7 @@ function MoviesContextProvider({ children }: Props) {
     );
     const data = await response.json();
     return data.results;
-  }, [token]);
+  }, [token, apiOptions]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -300,20 +299,23 @@ function MoviesContextProvider({ children }: Props) {
     fetchTrendingMovies();
     fetchTopRatedMovies();
     fetchPopularMovies();
-  }, [getData, trendingMovies, topratedmovies, popularmovies]);
+  }, []);
   // useEffect(()=>{
   //   console.log(tvList,"line 305")
   // },[tvList])
 
   //************************** */ SHOWS sections*************************
-  const shows = useCallback(async (catnum:number) => {
-    const response = await fetch(
-      `https://api.themoviedb.org/3/discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${catnum}`,
-      apiOptions,
-    );
-    const data = await response.json();
-    return data.results;
-  }, [token],)
+  const shows = useCallback(
+    async (catnum: number) => {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${catnum}`,
+        apiOptions,
+      );
+      const data = await response.json();
+      return data.results;
+    },
+    [token, apiOptions],
+  );
 
   const trendingShows = useCallback(async () => {
     const response = await fetch(
@@ -322,7 +324,7 @@ function MoviesContextProvider({ children }: Props) {
     );
     const data = await response.json();
     return data.results;
-  }, [token]);
+  }, [token, apiOptions]);
 
   const topratedShows = useCallback(async () => {
     const response = await fetch(
@@ -340,7 +342,7 @@ function MoviesContextProvider({ children }: Props) {
     );
     const data = await response.json();
     return data.results;
-  }, [token]);
+  }, [token, apiOptions]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -369,8 +371,7 @@ function MoviesContextProvider({ children }: Props) {
     fetchTrendingShows();
     fetchTopRatedShows();
     fetchPopularShows();
-  }, [getData, trendingShows, topratedShows, popularShows]);
-
+  }, []);
 
   const value = useMemo(
     () => ({
@@ -390,8 +391,8 @@ function MoviesContextProvider({ children }: Props) {
       setTrendingTvList,
       topRatedTv,
       setTopRatedTv,
-      popularTvList ,
-      setPopularTv ,
+      popularTvList,
+      setPopularTv,
     }),
     [
       // movies
@@ -410,8 +411,8 @@ function MoviesContextProvider({ children }: Props) {
       setTrendingTvList,
       topRatedTv,
       setTopRatedTv,
-      popularTvList ,
-      setPopularTv ,
+      popularTvList,
+      setPopularTv,
     ],
   );
 

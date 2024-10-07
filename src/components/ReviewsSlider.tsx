@@ -63,10 +63,10 @@ function ReviewsSlider({ children }: Props) {
       >
         {children}
       </Slider>
-      <div className="mx-auto flex h-[55px] w-[19%] items-center justify-evenly rounded-[12px] text-white">
+      <div className="mx-auto flex h-[55px] w-[19%] items-center justify-center rounded-[12px] text-white">
         <button
           onClick={previous}
-          className="rounded-[50%] bg-[#1A1A1A] p-[10px]"
+          className="rounded-[50%] bg-[#141414] p-[10px]"
         >
           <FaArrowLeft />
         </button>
@@ -90,7 +90,7 @@ function ReviewsSlider({ children }: Props) {
             }}
           ></button>
         </div>
-        <button onClick={next} className="rounded-[50%] bg-[#1A1A1A] p-[10px]">
+        <button onClick={next} className="rounded-[50%] bg-[#141414] p-[10px]">
           <FaArrowRight />
         </button>
       </div>

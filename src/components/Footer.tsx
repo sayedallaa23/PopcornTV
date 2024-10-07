@@ -14,16 +14,25 @@ export default function Footer({}: Props) {
             Home
           </h4>
           <div className="links-sec flex flex-col leading-7">
-            <Link className="text-[14px] text-[#999999]" href={""}>
+            <Link
+              className="text-[14px] text-[#999999]"
+              href={"/media/categories"}
+            >
               Categories
             </Link>
-            <Link className="text-[14px] text-[#999999]" href={""}>
+            <Link
+              className="text-[14px] text-[#999999]"
+              href={"/#platforms-section"}
+            >
               Devices
             </Link>
-            <Link className="text-[14px] text-[#999999]" href={""}>
+            <Link
+              className="text-[14px] text-[#999999]"
+              href={"/#pricing-section"}
+            >
               Pricing
             </Link>
-            <Link className="text-[14px] text-[#999999]" href={""}>
+            <Link className="text-[14px] text-[#999999]" href={"/#faq-secion"}>
               FAQ
             </Link>
           </div>
@@ -33,16 +42,28 @@ export default function Footer({}: Props) {
             Movies
           </h4>
           <div className="flex flex-col leading-7">
-            <Link className="text-[14px] text-[#999999]" href={""}>
+            <Link
+              className="text-[14px] text-[#999999]"
+              href={"/media/categories/#movies-genres"}
+            >
               Gernes
             </Link>
-            <Link className="text-[14px] text-[#999999]" href={""}>
+            <Link
+              className="text-[14px] text-[#999999]"
+              href={"/media/categories/#movies-trending"}
+            >
               Trending
             </Link>
-            <Link className="text-[14px] text-[#999999]" href={""}>
-              New Release
+            <Link
+              className="text-[14px] text-[#999999]"
+              href={"/media/categories/#movies-top-rated"}
+            >
+              Top Rated
             </Link>
-            <Link className="text-[14px] text-[#999999]" href={""}>
+            <Link
+              className="text-[14px] text-[#999999]"
+              href={"/media/categories/#movies-popular"}
+            >
               Popular
             </Link>
           </div>
@@ -52,16 +73,28 @@ export default function Footer({}: Props) {
             Shows
           </h4>
           <div className="flex flex-col leading-7">
-            <Link className="text-[14px] text-[#999999]" href={""}>
+            <Link
+              className="text-[14px] text-[#999999]"
+              href={"/media/categories/#shows-genres"}
+            >
               Gernes
             </Link>
-            <Link className="text-[14px] text-[#999999]" href={""}>
+            <Link
+              className="text-[14px] text-[#999999]"
+              href={"/media/categories/#shows-trending"}
+            >
               Trending
             </Link>
-            <Link className="text-[14px] text-[#999999]" href={""}>
-              New Release
+            <Link
+              className="text-[14px] text-[#999999]"
+              href={"/media/categories/#shows-top-rated"}
+            >
+              Top Rated
             </Link>
-            <Link className="text-[14px] text-[#999999]" href={""}>
+            <Link
+              className="text-[14px] text-[#999999]"
+              href={"/media/categories/#shows-popular"}
+            >
               Popular
             </Link>
           </div>
@@ -70,7 +103,7 @@ export default function Footer({}: Props) {
           <h4 className="mb-[16px] text-[16px] text-[#FFFFFF] lg:mb-[24px] lg:text-[20px]">
             Support
           </h4>
-          <Link className="text-[14px] text-[#999999]" href={""}>
+          <Link className="text-[14px] text-[#999999]" href={"/support"}>
             Contact Us
           </Link>
         </div>
@@ -79,10 +112,16 @@ export default function Footer({}: Props) {
             Subscription
           </h4>
           <div className="flex flex-col leading-7">
-            <Link className="text-[14px] text-[#999999]" href={""}>
+            <Link
+              className="text-[14px] text-[#999999]"
+              href={"/subscriptions"}
+            >
               Plans
             </Link>
-            <Link className="text-[14px] text-[#999999]" href={""}>
+            <Link
+              className="text-[14px] text-[#999999]"
+              href={"/subscriptions"}
+            >
               Features
             </Link>
           </div>
