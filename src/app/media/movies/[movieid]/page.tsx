@@ -29,6 +29,7 @@ import { FaXmark } from "react-icons/fa6";
 import { IoIosAdd } from "react-icons/io";
 import { MdDeleteForever } from "react-icons/md";
 import { read } from "fs";
+import { Authcontext } from "@/store/AuthContext";
 type Props = {
   params: any;
 };
@@ -51,6 +52,7 @@ function Page({ params }: Props) {
   const videoRef = useRef<ReactPlayer>(null);
   const [isInWatchList, setIsInWatchList] = useState(false);
   const [isInFavoriteList, setIsInFavoriteList] = useState(false);
+  const authContext = React.useContext(Authcontext);
 
   const token = process.env.NEXT_PUBLIC_TOKEN;
   const apiOptions = {
@@ -135,6 +137,7 @@ function Page({ params }: Props) {
         { merge: true },
       );
     }
+    setIsInWatchList(true)
   };
   const removeMovieFromWatchList = async () => {
     const movieToRemove = {
@@ -146,6 +149,7 @@ function Page({ params }: Props) {
     await updateDoc(usersRef, {
       moviesWatchList: arrayRemove(movieToRemove),
     });
+    setIsInWatchList(false)
   };
 
   const addMovieToFavoritesList = async () => {
@@ -183,6 +187,7 @@ function Page({ params }: Props) {
         { merge: true },
       );
     }
+    setIsInFavoriteList(true);
   };
   const removeMovieFromFavoritesList = async () => {
     const movieToRemove = {
@@ -194,6 +199,7 @@ function Page({ params }: Props) {
     await updateDoc(usersRef, {
       moviesFavoritesList: arrayRemove(movieToRemove),
     });
+    setIsInFavoriteList(false);
   };
   useEffect(() => {
     getData(params.movieid).then((data) => {
@@ -204,7 +210,7 @@ function Page({ params }: Props) {
       const writer = data.credits.crew.find((member: any) => {
         return member.job == "Writer";
       });
-      const apiReviews = moviedata?.reviews.results.slice(0, 6);
+      
       if (director) {
         setDirectorDate({
           name: director.name,
@@ -217,9 +223,7 @@ function Page({ params }: Props) {
           profile_path: writer.profile_path,
         });
       }
-      if (apiReviews) {
-        setUsersReviews(apiReviews);
-      }
+
 
       const fetchMovieTrailer = async () => {
         const data = await getMovieTrailer();
@@ -233,6 +237,15 @@ function Page({ params }: Props) {
     });
   }, []);
 
+  // reviews api 
+  useEffect(()=>{
+    const apiReviews = moviedata?.reviews.results.slice(0, 6);
+    if (apiReviews) {
+      setUsersReviews(apiReviews);
+    }
+    console.log(usersReviews,"line 246")
+  },[moviedata])
+
   useEffect(() => {
     const checkWatchList = async () => {
       const username = String(auth.currentUser?.email);
@@ -243,7 +256,9 @@ function Page({ params }: Props) {
         const movieExists = watchList.some(
           (movie: { itemID: any }) => movie.itemID === params.movieid,
         );
-        setIsInWatchList(movieExists);
+        if (movieExists) {
+          setIsInWatchList(true);
+        }
       }
     };
     const checkFavoritesList = async () => {
@@ -255,12 +270,21 @@ function Page({ params }: Props) {
         const movieExists = favoritsList.some(
           (movie: { itemID: any }) => movie.itemID === params.movieid,
         );
-        setIsInFavoriteList(movieExists);
+        if (movieExists) {
+          setIsInFavoriteList(true);
+        }
+       
       }
     };
     checkWatchList();
     checkFavoritesList();
-  }, [params.movieid, isInWatchList, isInFavoriteList]);
+  }, [
+    params.movieid,
+    isInWatchList,
+    isInFavoriteList,
+    addMovieToFavoritesList,
+    addMovieToWatchList,
+  ]);
   return (
     <div className="">
       <section className="relative bottom-[65px] sm:bottom-[115px]">
@@ -430,6 +454,7 @@ function Page({ params }: Props) {
                 </div>
               </div>
             )}
+            {authContext?.isSignin&&
             <div className="mt-[10%] flex justify-between">
               {isInWatchList ? (
                 <button
@@ -472,7 +497,7 @@ function Page({ params }: Props) {
                   Favorite
                 </button>
               )}
-            </div>
+            </div>}
           </div>
           <div className="cast-section mt-4 w-[100%] rounded-[10px] border-[1px] border-[#262626] bg-[#1A1A1A] p-7">
             <div>
@@ -678,6 +703,7 @@ function Page({ params }: Props) {
               </div>
             </div>
           )}
+          {authContext?.isSignin&&
           <div className="mt-[10%] flex justify-between">
             {isInWatchList ? (
               <button
@@ -720,7 +746,7 @@ function Page({ params }: Props) {
                 Favorite
               </button>
             )}
-          </div>
+          </div>}
         </div>
       </div>
       <div
