@@ -44,7 +44,7 @@ export default function Home() {
           PopcornTv is the best streaming experience for watching your favorite
           movies and shows on demand, anytime, anywhere.
         </p>
-        <Link href={"/media"}>
+        <Link href={"/subscriptions"}>
           <button className="m-auto flex items-center justify-center rounded-md bg-[#E50000] p-3">
             <FaPlay className="m-[8px]" />
             Start Watching Now

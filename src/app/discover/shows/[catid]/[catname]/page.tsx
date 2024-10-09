@@ -28,21 +28,23 @@ function Page({ params }: Props) {
           />
         </div>
       </section>
-      <div className="relative bottom-[13rem] md:bottom-[20rem] flex-row items-center justify-center text-center text-white  lg:bottom-[30rem]">
-        <h2 className="text-[28px] lg:text-[58px] mb-2">
+      <div className="relative bottom-[13rem] flex-row items-center justify-center text-center text-white md:bottom-[20rem] lg:bottom-[30rem]">
+        <h2 className="mb-2 text-[28px] lg:text-[58px]">
           {showstomap && showstomap.shows[0].original_title}
         </h2>
         <p className="mx-auto mb-9 mt-2 hidden w-[90%] text-[18px] text-[#999999] lg:block xl:w-[70%]">
           {showstomap && showstomap.shows[0].overview}
         </p>
         <div>
-          <button className="m-auto flex items-center justify-center rounded-md bg-[#E50000] p-2 sm:p-3">
-            <FaPlay className="m-[8px]" />
-            Start Watching Now
-          </button>
+          <Link href={`/media/movies/${showstomap && showstomap.shows[0].id}`}>
+            <button className="m-auto flex items-center justify-center rounded-md bg-[#E50000] p-2 sm:p-3">
+              <FaPlay className="m-[8px]" />
+              Start Watching Now
+            </button>
+          </Link>
         </div>
       </div>
-      <div className="mx-auto flex w-[90%] flex-wrap md:w-[84%] mt-[-5rem] lg:mt-[-15rem] mb-[20%] md:mb-[10%] lg:mb-[8%]">
+      <div className="mx-auto mb-[20%] mt-[-5rem] flex w-[90%] flex-wrap md:mb-[10%] md:w-[84%] lg:mb-[8%] lg:mt-[-15rem]">
         {showstomap &&
           showstomap.shows.map(
             (
@@ -51,21 +53,24 @@ function Page({ params }: Props) {
                 vote_average: any;
                 original_name: any;
                 poster_path: any;
-                id : any
+                id: any;
               },
               index: any,
             ) => (
               <div
-                className="m-[2.5%] w-[45%] rounded-[10px] bg-[#1A1A1A] p-[20px] xl:w-[20%] lg:pb-[25px]"
+                className="m-[2.5%] w-[45%] rounded-[10px] bg-[#1A1A1A] p-[20px] lg:pb-[25px] xl:w-[20%]"
                 key={index}
-              > <Link href={`/media/shows/${movie.id}`}>
-                <Image
-                  className="h-[95%] w-[100%] rounded-[10px] object-cover"
-                  src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
-                  width={100}
-                  height={100}
-                  alt={""}
-                ></Image></Link>
+              >
+                {" "}
+                <Link href={`/media/shows/${movie.id}`}>
+                  <Image
+                    className="h-[95%] w-[100%] rounded-[10px] object-cover"
+                    src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+                    width={100}
+                    height={100}
+                    alt={""}
+                  ></Image>
+                </Link>
                 <div className="mt-[10px] flex items-center justify-between pb-[10px] text-[10px] text-[#999999]">
                   <p>{movie.first_air_date}</p>
                   <div className="flex items-center justify-between">

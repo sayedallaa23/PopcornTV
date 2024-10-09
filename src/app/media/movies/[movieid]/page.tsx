@@ -225,17 +225,23 @@ function Page({ params }: Props) {
       }
 
 
-      const fetchMovieTrailer = async () => {
-        const data = await getMovieTrailer();
-        setMovieTrailer(
-          data.find((x: any) => {
-            return x.type.toLowerCase() === "trailer";
-          }),
-        );
-      };
-      fetchMovieTrailer();
+
     });
   }, []);
+
+  // trailers api
+
+  useEffect(()=>{
+    const fetchMovieTrailer = async () => {
+      const data = await getMovieTrailer();
+      setMovieTrailer(
+        data.find((x: any) => {
+          return x.type.toLowerCase() === "trailer";
+        }),
+      );
+    };
+    fetchMovieTrailer();
+  },[movieTrailer])
 
   // reviews api 
   useEffect(()=>{

@@ -115,7 +115,7 @@ export default function Navbar({}: Props) {
             router.refresh();
           }}
         />
-        <Link href={authContext?.isSignin?"/profile":"/login"}>
+        <Link href={authContext?.isSignin ? "/profile" : "/login"}>
           <CiBellOn className="sm:text-3xl" />
         </Link>
         {authContext?.isSignin && (
@@ -144,6 +144,18 @@ export default function Navbar({}: Props) {
               id=""
               className="h-[4vh] w-[70vw] rounded-md bg-[#d8d5d5] p-2 text-black"
               placeholder="Search"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  const queryString = new URLSearchParams({
+                    q: searchQuery,
+                  }).toString();
+                  router.push(`/search?${queryString}`);
+                  router.refresh();
+                }
+              }}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+              }}
             />
           </div>
           <FaXmark
@@ -153,7 +165,7 @@ export default function Navbar({}: Props) {
             }}
           />
         </div>
-        <div className="links flex flex-col px-5 my-7">
+        <div className="links my-7 flex flex-col px-5">
           <Link
             href={"/"}
             className="py-2 text-[#BFBFBF]"
@@ -190,13 +202,24 @@ export default function Navbar({}: Props) {
           >
             Subscriptions
           </Link>
-          <Link href={authContext?.isSignin?"/profile":"/login"} className="py-2 text-[#BFBFBF]">
+          <Link
+            href={authContext?.isSignin ? "/profile" : "/login"}
+            className="py-2 text-[#BFBFBF]"
+          >
             Profile
           </Link>
-          {authContext?.isSignin&&
-          <Link href={"/"} className="py-2 text-[#BFBFBF]" onClick={()=>{signout2;handleHamMenu()}}>
-            Sign out
-          </Link>}
+          {authContext?.isSignin && (
+            <Link
+              href={"/"}
+              className="py-2 text-[#BFBFBF]"
+              onClick={() => {
+                signout2;
+                handleHamMenu();
+              }}
+            >
+              Sign out
+            </Link>
+          )}
         </div>
       </div>
     </div>

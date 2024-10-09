@@ -136,7 +136,7 @@ function Page({ params }: Props) {
         { merge: true },
       );
     }
-    setIsInWatchList(true)
+    setIsInWatchList(true);
   };
   const removeShowFromWatchList = async () => {
     const movieToRemove = {
@@ -148,7 +148,7 @@ function Page({ params }: Props) {
     await updateDoc(usersRef, {
       showsWatchList: arrayRemove(movieToRemove),
     });
-    setIsInWatchList(false)
+    setIsInWatchList(false);
   };
 
   const addShowToFavoritesList = async () => {
@@ -186,7 +186,7 @@ function Page({ params }: Props) {
         { merge: true },
       );
     }
-    setIsInFavoriteList(true)
+    setIsInFavoriteList(true);
   };
   const removeShowFromFavoritesList = async () => {
     const movieToRemove = {
@@ -198,7 +198,7 @@ function Page({ params }: Props) {
     await updateDoc(usersRef, {
       showsFavoritesList: arrayRemove(movieToRemove),
     });
-    setIsInFavoriteList(false)
+    setIsInFavoriteList(false);
   };
 
   useEffect(() => {
@@ -222,27 +222,29 @@ function Page({ params }: Props) {
           profile_path: writer.profile_path,
         });
       }
-
-
-      const fetchMovieTrailer = async () => {
-        const data = await getMovieTrailer();
-        setMovieTrailer(
-          data.find((x: any) => {
-            return x.type.toLowerCase() === "trailer";
-          }),
-        );
-      };
-      fetchMovieTrailer();
     });
   }, []);
-  // reviews api 
-  useEffect(()=>{
+  // trailer api
+  useEffect(() => {
+    const fetchMovieTrailer = async () => {
+      const data = await getMovieTrailer();
+      setMovieTrailer(
+        data.find((x: any) => {
+          return x.type.toLowerCase() === "trailer";
+        }),
+      );
+    };
+    fetchMovieTrailer();
+  }, [movieTrailer]);
+
+  // reviews api
+  useEffect(() => {
     const apiReviews = moviedata?.reviews.results.slice(0, 6);
     if (apiReviews) {
       setUsersReviews(apiReviews);
     }
-    console.log(usersReviews,"line 246")
-  },[moviedata])
+    console.log(usersReviews, "line 246");
+  }, [moviedata]);
   useEffect(() => {
     const checkWatchList = async () => {
       const username = String(auth.currentUser?.email);
@@ -253,10 +255,9 @@ function Page({ params }: Props) {
         const movieExists = watchList.some(
           (movie: { itemID: any }) => movie.itemID === params.movieid,
         );
-        if (movieExists){
-        setIsInWatchList(true);  
+        if (movieExists) {
+          setIsInWatchList(true);
         }
-        
       }
     };
     const checkFavoritesList = async () => {
@@ -268,15 +269,20 @@ function Page({ params }: Props) {
         const movieExists = favoritsList.some(
           (movie: { itemID: any }) => movie.itemID === params.movieid,
         );
-        if (movieExists){
-        setIsInFavoriteList(true);  
+        if (movieExists) {
+          setIsInFavoriteList(true);
         }
-        
       }
     };
     checkWatchList();
     checkFavoritesList();
-  }, [params.movieid, isInWatchList, isInFavoriteList,addShowToFavoritesList,addShowToWatchList]);
+  }, [
+    params.movieid,
+    isInWatchList,
+    isInFavoriteList,
+    addShowToFavoritesList,
+    addShowToWatchList,
+  ]);
 
   return (
     <div className="">
@@ -430,50 +436,53 @@ function Page({ params }: Props) {
                 </div>
               </div>
             )}
-            {authContext?.isSignin&&
-            <div className="mt-[10%] flex justify-between">
-              {isInWatchList ? (
-                <button
-                  onClick={() => {
-                    removeShowFromWatchList();
-                  }}
-                  className="flex items-center justify-between rounded-[8px] border-[1px] border-[#262626] bg-[#141414] p-4"
-                >
-                  <MdDeleteForever className="mr-1 text-[#E50000]" /> WatchList
-                </button>
-              ) : (
-                <button
-                  onClick={() => {
-                    addShowToWatchList();
-                  }}
-                  className="flex items-center justify-between rounded-[8px] border-[1px] border-[#262626] bg-[#141414] p-4"
-                >
-                  <IoIosAdd className="mr-1" />
-                  watch List
-                </button>
-              )}
+            {authContext?.isSignin && (
+              <div className="mt-[10%] flex justify-between">
+                {isInWatchList ? (
+                  <button
+                    onClick={() => {
+                      removeShowFromWatchList();
+                    }}
+                    className="flex items-center justify-between rounded-[8px] border-[1px] border-[#262626] bg-[#141414] p-4"
+                  >
+                    <MdDeleteForever className="mr-1 text-[#E50000]" />{" "}
+                    WatchList
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => {
+                      addShowToWatchList();
+                    }}
+                    className="flex items-center justify-between rounded-[8px] border-[1px] border-[#262626] bg-[#141414] p-4"
+                  >
+                    <IoIosAdd className="mr-1" />
+                    watch List
+                  </button>
+                )}
 
-              {isInFavoriteList ? (
-                <button
-                  onClick={() => {
-                    removeShowFromFavoritesList();
-                  }}
-                  className="flex items-center justify-between rounded-[8px] border-[1px] border-[#262626] bg-[#141414] p-4"
-                >
-                  <MdDeleteForever className="mr-1 text-[#E50000]" /> Favorites
-                </button>
-              ) : (
-                <button
-                  onClick={() => {
-                    addShowToFavoritesList();
-                  }}
-                  className="flex items-center justify-between rounded-[8px] border-[1px] border-[#262626] bg-[#141414] p-4"
-                >
-                  <IoIosAdd className="mr-1" />
-                  Favorite
-                </button>
-              )}
-            </div>}
+                {isInFavoriteList ? (
+                  <button
+                    onClick={() => {
+                      removeShowFromFavoritesList();
+                    }}
+                    className="flex items-center justify-between rounded-[8px] border-[1px] border-[#262626] bg-[#141414] p-4"
+                  >
+                    <MdDeleteForever className="mr-1 text-[#E50000]" />{" "}
+                    Favorites
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => {
+                      addShowToFavoritesList();
+                    }}
+                    className="flex items-center justify-between rounded-[8px] border-[1px] border-[#262626] bg-[#141414] p-4"
+                  >
+                    <IoIosAdd className="mr-1" />
+                    Favorite
+                  </button>
+                )}
+              </div>
+            )}
           </div>
           <div className="cast-section mt-4 w-[100%] rounded-[10px] border-[1px] border-[#262626] bg-[#1A1A1A] p-7">
             <div>
@@ -659,50 +668,51 @@ function Page({ params }: Props) {
               </div>
             </div>
           )}
-          {authContext?.isSignin&&
-          <div className="mt-[10%] flex justify-between">
-            {isInWatchList ? (
-              <button
-                onClick={() => {
-                  removeShowFromWatchList();
-                }}
-                className="flex items-center justify-between rounded-[8px] border-[1px] border-[#262626] bg-[#141414] p-4"
-              >
-                <MdDeleteForever className="mr-1 text-[#E50000]" /> WatchList
-              </button>
-            ) : (
-              <button
-                onClick={() => {
-                  addShowToWatchList();
-                }}
-                className="flex items-center justify-between rounded-[8px] border-[1px] border-[#262626] bg-[#141414] p-4"
-              >
-                <IoIosAdd className="mr-1" />
-                watch List
-              </button>
-            )}
+          {authContext?.isSignin && (
+            <div className="mt-[10%] flex justify-between">
+              {isInWatchList ? (
+                <button
+                  onClick={() => {
+                    removeShowFromWatchList();
+                  }}
+                  className="flex items-center justify-between rounded-[8px] border-[1px] border-[#262626] bg-[#141414] p-4"
+                >
+                  <MdDeleteForever className="mr-1 text-[#E50000]" /> WatchList
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    addShowToWatchList();
+                  }}
+                  className="flex items-center justify-between rounded-[8px] border-[1px] border-[#262626] bg-[#141414] p-4"
+                >
+                  <IoIosAdd className="mr-1" />
+                  watch List
+                </button>
+              )}
 
-            {isInFavoriteList ? (
-              <button
-                onClick={() => {
-                  removeShowFromFavoritesList();
-                }}
-                className="flex items-center justify-between rounded-[8px] border-[1px] border-[#262626] bg-[#141414] p-4"
-              >
-                <MdDeleteForever className="mr-1 text-[#E50000]" /> Favorites
-              </button>
-            ) : (
-              <button
-                onClick={() => {
-                  addShowToFavoritesList();
-                }}
-                className="flex items-center justify-between rounded-[8px] border-[1px] border-[#262626] bg-[#141414] p-4"
-              >
-                <IoIosAdd className="mr-1" />
-                Favorite
-              </button>
-            )}
-          </div>}
+              {isInFavoriteList ? (
+                <button
+                  onClick={() => {
+                    removeShowFromFavoritesList();
+                  }}
+                  className="flex items-center justify-between rounded-[8px] border-[1px] border-[#262626] bg-[#141414] p-4"
+                >
+                  <MdDeleteForever className="mr-1 text-[#E50000]" /> Favorites
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    addShowToFavoritesList();
+                  }}
+                  className="flex items-center justify-between rounded-[8px] border-[1px] border-[#262626] bg-[#141414] p-4"
+                >
+                  <IoIosAdd className="mr-1" />
+                  Favorite
+                </button>
+              )}
+            </div>
+          )}
         </div>
       </div>
       <div
